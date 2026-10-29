@@ -1,0 +1,909 @@
+\documentclass[12pt]{amsart}
+
+\usepackage[expansion=false]{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,enumitem,array,float}
+\usepackage[colorlinks=true,allcolors=black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}\newcommand{\R}{\mathbb R}\newcommand{\T}{\mathbb T}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ML}{\operatorname{ML}}
+\newcommand{\covol}{\operatorname{covol}}
+\newcommand{\supn}[1]{\lvert #1\rvert_\infty}
+\newcommand{\eucl}[1]{\lvert #1\rvert}
+\newcommand{\Uone}{U^{1}}\newcommand{\Utwo}{U^{2}}
+\newcommand{\Wone}{W^{1}}\newcommand{\Wtwo}{W^{2}}
+\newcommand{\cU}{\mathcal U}
+\emergencystretch=3em
+\title{Four runners that are barely lonely}
+\author[H. Yi et al.]{Hyunjun Yi, Karam Gill, Bryan Bu}
+\address[Hyunjun Yi]{Seoul International School, 15 Seongnam-daero 1518beon-gil, Sujeong-gu, Seongnam-si, Gyeonggi-do 13113, Republic of Korea}
+\email{hjyi2027@gmail.com}
+\address[Karam Gill]{Stanford Online High School, 415 Broadway, Academy Hall, Floor 2, 8853, Redwood City, CA 94063, USA}
+\email{kgill12@ohs.stanford.edu}
+\address[Bryan Bu]{University of Massachusetts Amherst, 141 Commonwealth Avenue, Amherst, MA 01003, USA}
+\email{bryanbu@umass.edu}
+\subjclass[2020]{Primary 11J71; Secondary 11H06, 52C07}
+\keywords{Lonely Runner Conjecture, loneliness spectrum, subtori, geometry of numbers}
+\begin{document}
+\begin{abstract}
+For positive integers $v_1,\dots,v_n$ let $\ML(v_1,\dots,v_n)=\max_t\min_i\norm{v_it}$, where $\norm{x}$ is the distance to the nearest integer. Kravitz asked which values below $1/n$ occur. For $n=4$, Jain and Kravitz showed that the values below $1/4$ are $m/(4m+2)$, $m\ge2$, up to finitely many undetermined exceptions. We settle the four-runner case completely. A primitive quadruple has $\ML<1/4$ if and only if it is, up to order, $\{1,2,3,4k\}$, or $\{x,y,x+y,x+2y\}$ with $\gcd(x,y)=1$ and $y\not\equiv x,2x\pmod 4$, or $\{1,3,4,14\}$. The values below $1/4$ are exactly $m/(4m+2)$ with $m\ge2$, $m\ne3$, so $3/14$ is the only exception, and Conjecture~4.1 of Fan and Sun holds. A density lemma bounds the length of a quadruple on neither critical subtorus by $512$, and an exact search over $800{,}816{,}099$ quadruples completes the proof. The same method shows that the two-dimensional subtori of $(\R/\Z)^4$ with loneliness below $2/5$ take exactly the three-runner values in that range, which between $1/3$ and $2/5$ are the fractions $p/q$ with $1\le 2q-5p\le 4$. Hence the accumulation points of the four-runner spectrum in $(0,2/5]$ are the three-runner values there, as Giri and Kravitz conjectured, and $9/25$ is not the loneliness of a two-dimensional subtorus. For every $n$, assuming the conjecture for $n-1$ and $n-2$ speeds, we prove $\ML(v)>1/n-(n(n-1))^{n-2}/(2|v|)$, which is sharp in $|v|$, and that every $n$-tuple with $\ML<1/n$ and $|v|\ge n(n(n-1))^{2n-4}$ lies on a two-dimensional subtorus of loneliness $1/n$. This answers a question of Cordella. For five speeds, a two-dimensional subtorus of $(\R/\Z)^5$ with loneliness below $2/9$ is the product of a coordinate circle with the circle of $\{1,2,3,4\}$ or $\{1,3,4,7\}$. We also give infinitely many subtori whose maximizers lie off every circle with a repeated speed.
+\end{abstract}
+\maketitle
+
+
+\section{Introduction}
+Let $\norm{x}=\min_{k\in\Z}|x-k|$. For a finite set $V$ of positive integers (the speeds) put
+\[
+ \ML(V)=\max_{t\in\R}\ \min_{v\in V}\norm{vt}.
+\]
+The Lonely Runner Conjecture of Wills \cite{Wills} and Cusick \cite{Cusick} predicts $\ML(V)\ge 1/(|V|+1)$. It is known for $|V|\le 6$ \cite{CusickPomerance,Chen,Bienia,BHK,BarajasSerra}, Rosenfeld proved it for seven speeds by a computer assisted argument \cite{Rosenfeld}, and further computer assisted proofs for up to fourteen speeds have been announced recently \cite{Trak,SungTrak,Allikvere}. The survey \cite{PerarnauSerra} describes the history and the many equivalent formulations.
+
+Kravitz \cite{Kravitz} proposed to study the whole \emph{spectrum} of values of $\ML$ for a fixed number $n=|V|$ of speeds. The example $V=\{1,\dots,n\}$ shows that the value $1/(n+1)$ is attained, and Kravitz asked whether the values between $1/(n+1)$ and $1/n$ form a rigid set. He conjectured that they are exactly the numbers $s/(ns+1)$, $s\in\mathbb N$, and proved this for $n\le 3$. Fan and Sun \cite{FanSun} showed that for $n=4$ the conjecture fails: $\ML(8,4s+3,4s+11,4s+19)=(2s+7)/(8s+30)$ for every $s\ge 0$. They proposed an amended conjecture, in which $s/(ns+k)$ is allowed for $1\le k\le n$, and they conjectured (their Conjecture~4.1) that for $n=4$ only $k\in\{1,2\}$ occurs. Jain and Kravitz \cite{JainKravitz} then developed a theory of \emph{relative spectra} and proved \cite[Theorem~1.3]{JainKravitz} that the set of values of $\ML$ below $1/4$ for four speeds has finite symmetric difference with
+\begin{equation}\label{eq:JK}
+ \Bigl\{\tfrac14-\tfrac{1}{8s+12}:s\ge 1\Bigr\}=\Bigl\{\tfrac{m}{4m+2}:m\ge 2\Bigr\}.
+\end{equation}
+(They state the result for $D=\frac12-\ML$ on the interval $(\frac14,\frac12]$, where the set reads $\frac14+1/\operatorname{Prog}(8,12)$ with $\operatorname{Prog}(8,12)=\{8s+12:s\ge0\}$. The term $s=0$ is $D=\frac13$, that is $\ML=\frac16$, which no quadruple attains because $\ML\ge\frac15$ for four speeds, and we omit it.) They write that determining this finite symmetric difference ``is itself a finite calculation that we have not attempted to carry out'', and that numerical experiments suggest that there are no exceptional elements. The value $\frac3{14}$, which corresponds to $s=2$, turns out to be absent.
+
+Cordella \cite{Cordella} carried the relative spectrum analysis to five and six speeds, again up to finitely many exceptions. The reduction behind all of these results, \cite[Lemma~2.4]{Cordella}, says that all but finitely many near-tight tuples lie on a two-dimensional ``critical'' subtorus, and it is not effective: no bound on the exceptional tuples is produced. Cordella asks \cite[Question~6.7]{Cordella} for an effective version, or for a direct argument that bounds the speeds of a near-tight tuple lying on no critical subtorus. For four speeds he searched all quadruples with speeds at most $200$ \cite[Section~6.3]{Cordella} and found exactly one near-tight quadruple on neither critical subtorus, namely $(1,3,4,14)$ with $\ML=4/17$. The purpose of this paper is to give the effective bound for four speeds, to carry out the Jain--Kravitz calculation completely, and to classify the speed sets. There is exactly one exceptional value and exactly one sporadic quadruple.
+
+Call a quadruple $V=\{v_1,v_2,v_3,v_4\}$ of distinct positive integers \emph{primitive} if $\gcd(v_1,v_2,v_3,v_4)=1$. Since $\ML(cV)=\ML(V)$, nothing is lost by this normalization. For integers $x,y\ge 1$ write
+\[
+ V(x,y)=\{x,\ y,\ x+y,\ x+2y\}.
+\]
+
+\begin{theorem}[Classification]\label{thm:main}
+Let $V$ be a primitive quadruple of distinct positive integers. Then $\ML(V)<1/4$ if and only if one of the following holds.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $V=\{1,2,3,4k\}$ for some $k\ge 1$, and then $\ML(V)=k/(4k+1)$.
+\item $V=V(x,y)$ with $\gcd(x,y)=1$, $x\ne y$, $y\not\equiv x\pmod 4$ and $y\not\equiv 2x\pmod 4$, and then $\ML(V)=m/(4m+2)$ with $m=m(x,y)$ given by \eqref{eq:m} below.
+\item $V=\{1,3,4,14\}$, and then $\ML(V)=4/17$.
+\end{enumerate}
+\end{theorem}
+
+The function $m(x,y)$ is explicit. Let $r=(y-x)\bmod 4$ and $r'=(y-2x)\bmod 4$, both in $\{1,2,3\}$ under the hypotheses of (b), and set
+\begin{equation}\label{eq:m}
+ m_1=\begin{cases}\frac{x+y-1}{2},&r=1,\\[2pt]\frac{x+3y-2}{4},&r=2,\\[2pt]\frac{x+3y-1}{2},&r=3,\end{cases}
+ \qquad
+ m_3=\begin{cases}\frac{2x+y-1}{2},&r'=1,\\[2pt]\frac{2x+3y-2}{4},&r'=2,\\[2pt]\frac{2x+3y-1}{2},&r'=3,\end{cases}
+\end{equation}
+and $m(x,y)=\max(m_1,m_3)$. These are integers (Lemma~\ref{lem:parity}). The only overlap between the three families is $V(2,1)=\{1,2,3,4\}$.
+
+\begin{theorem}[The spectrum below $1/4$]\label{thm:values}
+The set of values $\ML(V)$ over all quadruples $V$ of distinct positive integers with $\ML(V)<1/4$ is exactly
+\[
+ \Bigl\{\frac{m}{4m+2}: m\ge 2,\ m\ne 3\Bigr\}
+ =\Bigl\{\frac15,\frac29,\frac5{22},\frac3{13},\frac7{30},\frac4{17},\frac9{38},\dots\Bigr\}.
+\]
+Equivalently, apart from the term $\frac16$ excluded by the bound $\ML\ge\frac15$, the finite symmetric difference in \cite[Theorem~1.3]{JainKravitz} consists of the single value $3/14$, which is omitted.
+\end{theorem}
+
+\begin{corollary}\label{cor:consequences}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item If $\ML(v_1,\dots,v_4)<1/4$ then $\ML=s/(4s+k)$ with $k\in\{1,2\}$, as Fan and Sun conjectured \cite[Conjecture~4.1]{FanSun}. Their amended spectrum conjecture holds for $n=4$.
+\item \textup{(Chen \cite{Chen})} The tight quadruples are $\{1,2,3,4\}$ and $\{1,3,4,7\}$, up to scaling. Equivalently $\ML(V)=1/5$ for a primitive quadruple only in these two cases.
+\item Every primitive quadruple other than the two tight ones satisfies $\ML(V)\ge 2/9$.
+\end{enumerate}
+\end{corollary}
+
+Item (ii) is a theorem of Chen \cite{Chen}, see also Barajas and Serra \cite{BarajasSerraDM} and \cite[Section~4]{PerarnauSerra}. It appears to have been overlooked in the recent spectrum literature: Kravitz \cite[Section~13]{Kravitz} lists it as an open question, and Jain and Kravitz write in \cite{JainKravitz} that complete lists of tight instances were available only for $n\in\{1,2,3,5\}$. Cordella \cite[Section~2.5]{Cordella} gives the reference. Theorem~\ref{thm:main} recovers Chen's result with a different proof. The problem of describing all tight instances for general $n$ \cite[Problem~1]{PerarnauSerra} remains open. See Goddyn and Wong \cite{GoddynWong} and Zhang \cite{Zhang} for structured families.
+
+The same method goes one level up. Let $F(n_1,n_2)=\{(a,b,a+b,n_1a+n_2b)\}$ for $(n_1,n_2)\in\Z^2\setminus\{0\}$, a two-dimensional subtorus of $\T^4$ (so $F(1,2)=\Utwo$), and let $T_{(a,b,c)}\times\T$ denote the product of the circle of a triple with a free coordinate.
+
+\begin{theorem}[Two-dimensional subtori below $1/3$]\label{thm:second-intro}
+A coordinate-free two-dimensional subtorus $U$ of $\T^4$ has $\ML(U)<1/3$ if and only if, up to signed coordinate permutations, $U$ is a product $T_{(a,b,c)}\times\T$ with $\ML(a,b,c)<1/3$, or $U=F(n_1,n_2)$ with $n_1+n_2\equiv0\pmod3$. In both cases $\ML(U)=s/(3s+1)$ for some $s\ge1$, with $3s=\max(|n_1+n_2|,|2n_1-n_2|,|2n_2-n_1|)$ in the second case. Consequently the accumulation points of the four-runner spectrum in $(0,\frac13)$ are exactly the three-runner values $s/(3s+1)$.
+\end{theorem}
+
+The last sentence is the case $n=4$ of a conjecture of Giri and Kravitz \cite[Conjecture~1.5]{GiriKravitz}, that the accumulation points of the $n$-runner spectrum are the values of the $(n-1)$-runner spectrum, on the range of values below $\frac13$. Theorem~\ref{thm:second-intro} is proved in Section~\ref{sec:second} (Theorem~\ref{thm:second} and Corollary~\ref{cor:acc}).
+
+Above $\frac13$ the reduction meets the five three-dimensional subtori with loneliness $\frac25$, each of which carries infinitely many values. A version of the density lemma based on the shortest character of a subtorus, together with an exact analysis of these five subtori, reaches the next accumulation point $\frac25$ of the three-runner spectrum. Put
+\begin{align*}
+ \mathcal R&=\Big\{\frac pq\in\Big[\frac13,\frac25\Big):\gcd(p,q)=1,\ 1\le 2q-5p\le4\Big\}\\
+ &=\Big\{\frac{2j}{5j+2}:j\ge2\Big\}\cup\Big\{\frac{2j+1}{5j+4}:j\ge2\Big\}.
+\end{align*}
+
+\begin{theorem}[Two-dimensional subtori below $2/5$]\label{thm:upto25-intro}
+A coordinate-free two-dimensional subtorus $U$ of $\T^4$ with $\ML(U)<\frac25$ has
+\begin{align*}
+ \ML(U)\in{}&\Big\{\frac s{3s+1}:s\ge1\Big\}\cup\mathcal R\\
+ ={}&\Big\{\frac14,\frac27,\frac3{10},\dots\Big\}\cup\Big\{\frac13,\frac6{17},\frac5{14},\frac4{11},\frac7{19},\frac{10}{27},\frac38,\dots\Big\}.
+\end{align*}
+This set is exactly the set of three-runner values below $\frac25$, and $\ML(2,3,5j)=\frac{2j}{5j+2}$, $\ML(1,4,5j+3)=\frac{2j+1}{5j+4}$ for $j\ge2$. Consequently the accumulation points of the four-runner spectrum in $(0,\frac25]$ are exactly the three-runner values there.
+\end{theorem}
+
+In the notation $D=\frac12-\ML$ of \cite{GiriKravitz} this gives $\operatorname{acc}(\mathcal S(4))\cap[\frac1{10},\frac12)=\mathcal S(3)\cap[\frac1{10},\frac12)$, the case $n=4$ of \cite[Conjecture~1.5]{GiriKravitz} on a range that contains the two accumulation points $\frac16$ and $\frac1{10}$ of $\mathcal S(3)$. It also determines $\mathcal S(3)\cap(\frac1{10},\frac16]$ exactly. Jain and Kravitz described this set up to finitely many exceptions \cite[Theorem~1.4]{JainKravitz}, and Corollary~\ref{cor:acc25} shows that there are none in that interval. Finally $\frac9{25}\notin\mathcal R$. Giri and Kravitz showed that $\frac7{50}=\frac12-\frac9{25}$ is the value of a one-dimensional closed subgroup of $\T^3$ but of no circle, and wrote that they believed it is not the value of a two-dimensional subtorus of $\T^4$ but lacked the computing power to check \cite[Section~8]{GiriKravitz}. Theorem~\ref{thm:upto25-intro} confirms this, so the spectra of two-dimensional subtori and of two-dimensional closed subgroups of $\T^4$ differ. Remark~\ref{rem:slicing} explains why the full case $n=4$ needs a new idea: the natural route through circles with a repeated speed works for every subtorus of covolume at most $20$ with $\frac13<\ML<\frac12$, but fails for an explicit subtorus with $\ML=\frac{13}{30}$, whose value is nevertheless a three-runner value. Section~\ref{sec:obstr} turns this into an infinite family. For the subtori $U$ there, with $\ML(U)=\frac12-\frac1N$, every circle in $U$ with a repeated speed has loneliness at least $N^{-3}$ below $\ML(U)$, circles in $U$ with four distinct speeds come arbitrarily close to $\ML(U)$, and $\ML(U)=\ML(1,\frac N2,N-1)$ is still a three-runner value. These subtori are one phase of a family in which a weighted coalescence of two coordinates gives three-runner realizations on both sides of a phase transition.
+
+The density lemma also works for every number of speeds. Combined with Minkowski's second theorem and a bound for the denominator of the loneliness of a two-dimensional subtorus, it gives an effective form of the reduction of Cordella.
+
+\begin{theorem}[Every number of speeds]\label{thm:general-intro}
+Let $n\ge3$, assume the Lonely Runner Conjecture for $n-1$ and for $n-2$ speeds, and put $\kappa_n=(n(n-1))^{n-2}$. Every set $V$ of $n$ positive integers with $\gcd(V)=1$ satisfies
+\[
+ \ML(V)>\frac1n-\frac{\kappa_n}{2\eucl V},
+\]
+where $\eucl V$ is the Euclidean length of the vector of speeds. If moreover $\ML(V)<\frac1n$ and $\eucl V\ge n\kappa_n^2$, then the circle of $V$ lies in a two-dimensional subtorus of $(\R/\Z)^n$ with loneliness exactly $\frac1n$ and covolume less than $\kappa_n$, which also contains the circle of a set of $n-1$ speeds with loneliness $\frac1n$.
+\end{theorem}
+
+The hypotheses hold for $n\le15$ \cite{BarajasSerra,Rosenfeld,Trak,SungTrak,Allikvere}. The second statement is the effective form of \cite[Lemma~2.4]{Cordella}, under the same hypotheses, and answers \cite[Question~6.7]{Cordella} for every $n$. The first statement shows that the values below $\frac1n$ approach $\frac1n$ at rate $1/\eucl V$, which is sharp by Theorem~\ref{thm:main}(a). For counterexamples themselves sharper bounds are known \cite{MSS,Allikvere}. This is Theorem~\ref{thm:general} in Section~\ref{sec:general}. The constants are too large for an exhaustive search, which is why the case $n=4$ needs the finer analysis below.
+
+For five speeds, Theorem~\ref{thm:main} itself sharpens the general statement. Write $T_u\times\T$ for the product of the circle of a quadruple $u$ with a full coordinate circle.
+
+\begin{theorem}[Five speeds]\label{thm:five-intro}
+A coordinate-free two-dimensional subtorus of $(\R/\Z)^5$ with loneliness below $\frac29$ is, up to signed coordinate permutations, $T_{(1,2,3,4)}\times\T$ or $T_{(1,3,4,7)}\times\T$, and its loneliness is $\frac15$. Consequently the only accumulation point of the five-speed spectrum below $\frac29$ is $\frac15$, and every primitive five-speed tuple $V$ with $\ML(V)<\frac15$ and $\eucl V\ge33{,}750$ is, up to order, $\{a,2a,3a,4a,b\}$ or $\{a,3a,4a,7a,b\}$.
+\end{theorem}
+
+The proof (Section~\ref{sec:five}) uses that every circle with a repeated speed in such a subtorus has at most four distinct speeds and loneliness below $\frac29$, so by Theorem~\ref{thm:main} it is the circle of $\{1,2,3,4\}$ or $\{1,3,4,7\}$. Together with the bounds of Section~\ref{sec:general} this leaves a finite computation. For four speeds the second critical subtorus $\Utwo$ is not a product, so the two cases differ in kind.
+
+\subsection*{Method}
+The main tool is a density lemma (Lemma~\ref{lem:density}). If a subtorus $S$ of $\T^4=(\R/\Z)^4$ has a lattice of large covolume, then $S$ is dense, in the maximum norm, in a subtorus of one higher dimension, with an explicit constant obtained from Vaaler's theorem on central sections of the cube \cite{Vaaler} and Minkowski's convex body theorem. Since $\ML$ is $1$-Lipschitz in the maximum norm, this transfers lower bounds on $\ML$ from larger subtori to smaller ones. This is the quantitative, maximum norm version of the tube argument of Giri and Kravitz \cite[Lemma~4.4]{GiriKravitz}.
+
+Applied to the circle $T_v$ of a quadruple $v$ with $\ML(v)<1/4$ and $\eucl v\ge 512$, the lemma produces a two-dimensional subtorus $U\supseteq T_v$ with $\ML(U)<5/16$. This is the effective step: it bounds the length of every near-tight quadruple that lies on no critical subtorus by $512$ (Proposition~\ref{prop:large}), which is what \cite[Question~6.7]{Cordella} asks for in the case of four speeds. Applied once more, it shows that every two-dimensional subtorus with $\ML\le 5/16$ either has covolume less than $33$ or lies in one of two explicit three-dimensional subtori with a small parameter. Both cases are enumerated exactly. The result is a list of thirty-one subtori (Proposition~\ref{prop:list}). Two of them are the subtori $\Uone$ and $\Utwo$ of Jain and Kravitz with $\ML=1/4$, which carry the two infinite families, and the remaining twenty-nine have $\ML\ge 2/7$ and cannot contain a circle of length $\ge 288$ with loneliness below $1/4$. An exact exhaustive search over all primitive quadruples with $\eucl v<512$ completes the classification. The formulas for the two infinite families are proved by an elementary analysis of the superlevel sets of $\ML$ on $\Uone$ and $\Utwo$, in the spirit of \cite{JainKravitz}.
+
+All computations use exact integer or rational arithmetic. The programs, the certificate data and a Python script using only the standard library accompany the paper, see Section~\ref{sec:comp}. The script recomputes the smaller computations independently and checks the certificates and output files of the large enumerations.
+
+\section{Preliminaries}
+Write $\T=\R/\Z$ and $\T^4=\R^4/\Z^4$. For $x\in\T^4$ put
+\[
+ G(x)=\min_{1\le i\le 4}\norm{x_i}.
+\]
+For $p,q\in\R^4$ we use the maximum norm $\supn{p}=\max_i|p_i|$ and the Euclidean norm $\eucl p$. Since $\norm{\cdot}$ is $1$-Lipschitz on $\R$,
+\begin{equation}\label{eq:lip}
+ |G(x+p)-G(x)|\le \supn{p}\qquad (x\in\T^4,\ p\in\R^4).
+\end{equation}
+
+A \emph{subtorus} of $\T^4$ is a closed connected subgroup, that is, the image $S=E/(E\cap\Z^4)$ of a rational linear subspace $E\subseteq\R^4$. We write $\Lambda_S=E\cap\Z^4$, a primitive sublattice of $\Z^4$ of rank $k=\dim E$, and $\covol(S)=\covol(\Lambda_S)$ for the $k$-dimensional volume of a fundamental parallelepiped of $\Lambda_S$ in $E$. Put
+\[
+ \ML(S)=\max_{x\in S}G(x).
+\]
+Call $S$ \emph{coordinate-free} if it is contained in no coordinate hyperplane $\{x_i=0\}$, equivalently if no coordinate function vanishes identically on $\Lambda_S$. All subtori that contain a coordinate-free subtorus are coordinate-free.
+
+For $v\in\Z^4$ primitive with all $v_i\ne 0$ let $T_v=\{tv:t\in\R\}\subseteq\T^4$ be its circle. Then $\Lambda_{T_v}=\Z v$, $\covol(T_v)=\eucl v$, and
+\[
+ \ML(T_v)=\max_t\min_i\norm{v_it}=\ML(|v_1|,|v_2|,|v_3|,|v_4|).
+\]
+The group of signed coordinate permutations acts on $\T^4$ and preserves $G$, hence preserves $\ML$ of subtori, and it maps subtori to subtori. ``Up to symmetry'' always refers to this group of order $384$.
+
+\begin{lemma}[Corner lemma]\label{lem:corner}
+Let $V$ be a finite set of positive integers. Then $\ML(V)=\min_{v\in V}\norm{vt}$ for some $t=m/(u+w)$ with $u,w\in V$ and $m\in\Z$.
+\end{lemma}
+\begin{proof}
+The function $f(t)=\min_{v\in V}\norm{vt}$ is continuous and piecewise linear, with pieces of slopes $\pm v$. At a maximum point $t_0$ with $f(t_0)>0$, either some wave $\norm{vt}$ has a downward cusp at $t_0$ and $f(t_0)=\norm{vt_0}=1/2$, so $2vt_0\in\Z$, or two active pieces of slopes $u>0$ and $-w<0$ meet at $t_0$, so $ut_0-a=b-wt_0$ for integers $a,b$ and $(u+w)t_0\in\Z$. The case $f\equiv 0$ is impossible for finitely many positive speeds.
+\end{proof}
+This is \cite[Proposition~4.1]{Kravitz}. It makes $\ML(V)$ a finite exact computation, and it shows that $\ML(V)$ is rational.
+
+\begin{lemma}[Orbit lines]\label{lem:orbit}
+Let $x,y$ be coprime integers. A point $(X,Y)\in\T^2$ lies on the circle $\{(xt,yt):t\in\R\}$ if and only if $yX-xY\in\Z$.
+\end{lemma}
+\begin{proof}
+Necessity is clear. If $yX-xY=k\in\Z$, choose $h\in\Z$ with $yh\equiv -k\pmod x$ and put $t=(X+h)/x$. Then $xt\equiv X$ and $yt=(yX+yh)/x=(k+xY+yh)/x\equiv Y\pmod 1$.
+\end{proof}
+
+\section{The density lemma}
+\begin{lemma}[Density]\label{lem:density}
+Let $S$ be a $k$-dimensional subtorus of $\T^4$, $1\le k\le 3$, with $A=\covol(S)$, and let $E=\R\Lambda_S$. Let $\pi:\R^4\to E^\perp$ be the orthogonal projection. Then
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $\pi(\Z^4)$ is a lattice of rank $4-k$ in $E^\perp$ with $\covol(\pi(\Z^4))=1/A$.
+\item there is $w\in\Z^4\setminus\Lambda_S$ with $\supn{\pi(w)}\le A^{-1/(4-k)}$.
+\item for any $w\in\Z^4\setminus\Lambda_S$, let $S'$ be the $(k+1)$-dimensional subtorus with $\R\Lambda_{S'}=E+\R w$. Every point of $S'$ lies within maximum norm distance $\supn{\pi(w)}/2$ of a point of $S$. Consequently
+\[
+ \ML(S)\ \ge\ \ML(S')-\tfrac12\supn{\pi(w)}.
+\]
+\end{enumerate}
+In particular $\ML(S)\ge \ML(S')-\frac12A^{-1/(4-k)}$ for a suitable $S'\supseteq S$.
+\end{lemma}
+\begin{proof}
+(a) Since $\Lambda_S$ is primitive, a basis $b_1,\dots,b_k$ of $\Lambda_S$ extends to a basis $b_1,\dots,b_4$ of $\Z^4$. The kernel of $\pi$ on $\Z^4$ is $\Z^4\cap E=\Lambda_S$, so $\pi(\Z^4)\cong\Z^4/\Lambda_S\cong\Z^{4-k}$ is a lattice spanned by $\pi(b_{k+1}),\dots,\pi(b_4)$. The volume of the parallelepiped spanned by $b_1,\dots,b_4$ is $1$ and it factors as the $k$-volume of the parallelepiped spanned by $b_1,\dots,b_k$ in $E$ times the $(4-k)$-volume of the one spanned by $\pi(b_{k+1}),\dots,\pi(b_4)$ in $E^\perp$. Hence $1=A\cdot\covol(\pi(\Z^4))$.
+
+(b) Let $\rho>0$ and $K_\rho=\{z\in E^\perp:\supn{z}\le\rho\}$. This is the central section of the cube $[-\rho,\rho]^4$ by the $(4-k)$-dimensional subspace $E^\perp$, a compact, convex, centrally symmetric set. By Vaaler's theorem \cite{Vaaler}, every central section of the unit cube $[-\frac12,\frac12]^4$ by a subspace of dimension $d$ has $d$-dimensional volume at least $1$. Scaling by $2\rho$ gives $\operatorname{vol}_{4-k}(K_\rho)\ge(2\rho)^{4-k}$. Minkowski's convex body theorem (in the form valid for compact bodies, see \cite[Chapter~III]{Cassels}) states that a compact centrally symmetric convex set of volume at least $2^{4-k}\covol(\pi(\Z^4))=2^{4-k}/A$ contains a nonzero point of $\pi(\Z^4)$. For $\rho=A^{-1/(4-k)}$ we have $(2\rho)^{4-k}=2^{4-k}/A$, so there is $w\in\Z^4$ with $\pi(w)\ne 0$, that is $w\notin E$, and $\supn{\pi(w)}\le\rho$.
+
+(c) Write $u=\pi(w)$ and $w=u+e$ with $e\in E$. Let $y\in E+\R w$ represent a point of $S'$, say $y=s+bu$ with $s\in E$ and $b\in\R$. Choose $j\in\Z$ with $|b-j|\le 1/2$. Then
+\[
+ y-jw=(s-je)+(b-j)u,
+\]
+and $y-jw\equiv y\pmod{\Z^4}$. The point $s-je\in E$ represents a point of $S$, and $(b-j)u$ has maximum norm at most $\supn u/2$. By \eqref{eq:lip}, $G(y)\le G(s-je)+\supn u/2\le\ML(S)+\supn u/2$. Taking $y$ to be a maximizer of $G$ on $S'$ gives the inequality.
+\end{proof}
+
+\begin{remark}
+For $k=3$ Vaaler's theorem is not needed: $E^\perp=\R m$ for a primitive $m\in\Z^4$, $\pi(\Z^4)=\Z\,m/\eucl m^2$, and the vector $w$ with $m\cdot w=1$ has $\supn{\pi(w)}=\supn m/\eucl m^2$. Note also $\covol(\Lambda_S)=\eucl m$ in this case.
+\end{remark}
+
+\section{Three-dimensional subtori}
+A coordinate-free three-dimensional subtorus is $W_m=\{x\in\T^4:m\cdot x\in\Z\}$ for a primitive $m\in\Z^4$ with at least two nonzero entries, and $\covol(W_m)=\eucl m$. Up to symmetry we may take the entries of $m$ nonnegative after permuting, but we keep signs since they matter for the explicit coordinates.
+
+\begin{lemma}\label{lem:W13}
+Every coordinate-free three-dimensional subtorus $W$ satisfies $\ML(W)\ge 1/3$.
+\end{lemma}
+\begin{proof}
+Let $W=W_m$. We find $x\in[\frac13,\frac23]^4$ with $m\cdot x\in\Z$. The set $\{m\cdot x: x\in[\frac13,\frac23]^4\}$ is an interval of length $\frac13\sum_i|m_i|$. If $\sum_i|m_i|\ge 3$ the interval has length at least $1$ and contains an integer. Otherwise $m=\pm e_i\pm e_j$ for some $i\ne j$, and $x_i=x_j=\frac12$ gives $m\cdot x\in\{0,\pm1\}$.
+\end{proof}
+
+The two subtori
+\begin{gather*}
+ \Wone=\{x_1=2x_2\}=\{(2y,y,z,u)\},\\ \Wtwo=\{x_3=x_1+x_2\}=\{(a,b,a+b,u)\}
+\end{gather*}
+have $\ML=1/3$ exactly: the bound $\ML(\Wone)\le\ML(1,2)=1/3$ is clear, and $\min(\norm a,\norm b,\norm{a+b})\le 1/3$ for all $a,b$ since $\norm a,\norm b>1/3$ forces $a,b\in(\frac13,\frac23)+\Z$ and then $\norm{a+b}\le\frac13$.
+
+\begin{lemma}\label{lem:W25}
+Let $W$ be a coordinate-free three-dimensional subtorus with $\ML(W)<2/5$. Then $W$ is, up to symmetry, $\Wone$ or $\Wtwo$.
+\end{lemma}
+\begin{proof}
+Let $W=W_m$. By Lemma~\ref{lem:density}(c) with $S=W$, $S'=\T^4$ and the vector $w$ with $m\cdot w=1$ (see the remark above), and since $G(\frac12,\frac12,\frac12,\frac12)=\frac12$,
+\[
+ \ML(W)\ \ge\ \frac12-\frac{\supn m}{2\eucl m^2}.
+\]
+If $\ML(W)<2/5$ then $\eucl m^2<5\supn m$. As $\eucl m^2\ge\supn m^2$ this forces $\supn m\le 4$ and then $\eucl m^2\le 19$. There are exactly $21$ classes of primitive $m\in\Z^4$ with at least two nonzero entries and $\eucl m^2\le 19$ up to symmetry. For $19$ of them Table~\ref{tab:chars} exhibits a point $x\in W_m$ with $G(x)\ge 2/5$. The remaining two classes are $m=(0,0,1,-2)$ and $m=(0,1,-1,-1)$, whose subtori are $\Wone$ and $\Wtwo$ up to symmetry.
+\end{proof}
+
+\section{Two-dimensional subtori with loneliness at most $5/16$}\label{sec:two}
+\subsection{Reduction to a finite list}
+We identify $\Wone$ with $\T^3$ through $(y,z,u)\mapsto(2y,y,z,u)$, and $\Wtwo$ with $\T^3$ through $(a,b,u)\mapsto(a,b,a+b,u)$. The two-dimensional subtori of $\T^3$ are the kernels $U_n=\{p\in\T^3:n\cdot p\in\Z\}$ of primitive $n\in\Z^3$.
+
+\begin{lemma}\label{lem:reduce}
+Let $U$ be a coordinate-free two-dimensional subtorus of $\T^4$ with $\ML(U)\le 5/16$. Then at least one of the following holds.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item $\covol(U)<33$.
+\item Up to symmetry, $U\subseteq\Wone$ or $U\subseteq\Wtwo$, and in the coordinates of $\T^3$ above, $U=U_n$ with $\eucl n\le 48$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Let $A=\covol(U)$. Lemma~\ref{lem:density} gives a three-dimensional subtorus $W\supseteq U$ with $\ML(U)\ge\ML(W)-\frac12A^{-1/2}$, and $W$ is coordinate-free. If $\ML(W)\ge 2/5$, then $\frac12A^{-1/2}\ge\frac25-\frac5{16}=\frac7{80}$, so $A\le(40/7)^2<33$, which is (i). Otherwise Lemma~\ref{lem:W25} applies, and after a symmetry $W=\Wone$ or $W=\Wtwo$.
+
+Suppose $W=\Wone$ and let $U=U_n$ in the coordinates $(y,z,u)$, with $n\in\Z^3$ primitive. The function $G$ becomes $G_1(y,z,u)=\min(\norm{2y},\norm y,\norm z,\norm u)$, which satisfies $|G_1(p+\delta)-G_1(p)|\le N_1(\delta)$ with $N_1(\delta)=\max(2|\delta_1|,|\delta_2|,|\delta_3|)$. Choose $w\in\Z^3$ with $n\cdot w=1$. The orthogonal projection of $w$ onto $\R n$ is $n/\eucl n^2$, and the argument of Lemma~\ref{lem:density}(c), carried out in $\T^3$ with the norm $N_1$, shows that every point of $\T^3$ is within $N_1$-distance $N_1(n)/(2\eucl n^2)$ of $U_n$. The point $P=(\frac13,\frac12,\frac12)$ has $G_1(P)=\frac13$, so
+\[
+ \ML(U_n)\ \ge\ \frac13-\frac{N_1(n)}{2\eucl n^2}\ \ge\ \frac13-\frac{\supn n}{\eucl n^2}\ \ge\ \frac13-\frac1{\eucl n}.
+\]
+If $\ML(U_n)\le 5/16$ this gives $\eucl n\le 48$. For $W=\Wtwo$ use $G_2(a,b,u)=\min(\norm a,\norm b,\norm{a+b},\norm u)$, the norm $N_2(\delta)=\max(|\delta_1|,|\delta_2|,|\delta_1+\delta_2|,|\delta_3|)\le 2\supn\delta$, and the point $(\frac13,\frac13,\frac12)$ with $G_2=\frac13$. The same computation gives $\eucl n\le 48$.
+\end{proof}
+
+\subsection{The list}
+We now enumerate both cases of Lemma~\ref{lem:reduce} exactly.
+
+For (i), every primitive rank-two sublattice of $\Z^4$ has a unique basis in row Hermite normal form: rows $s,r$ with pivot columns $p<q$, $s_p>0$, $r_q>0$, $s_j=0$ for $j<p$, $r_j=0$ for $j<q$, and $0\le s_q<r_q$. The covolume is $\bigl(\sum_{i<j}(s_ir_j-s_jr_i)^2\bigr)^{1/2}$, primitivity means that the $2\times2$ minors have greatest common divisor $1$, and bounds on all entries follow from the bound on the minors. The enumeration produces $7{,}011{,}052$ primitive coordinate-free sublattices with covolume at most $33$. As an independent check of completeness, the same program counts $2{,}380$ and $51{,}820$ lattices of covolume at most $5$ and $10$, which agree with a direct count of primitive integer solutions of the Pl\"ucker relation $p_{12}p_{34}-p_{13}p_{24}+p_{14}p_{23}=0$ of the same norms. For (ii), the primitive $n\in\Z^3$ with $\eucl n\le 48$ up to sign are listed ($192{,}517$ vectors, of which $192{,}514$ and $192{,}513$ give coordinate-free subtori of $\Wone$ and $\Wtwo$ respectively), a basis of $\{c\in\Z^3:n\cdot c=0\}$ is computed by integer row reduction, and the covolume of the image in $\Z^4$ is verified against the closed formulas $n_1^2+5n_2^2+5n_3^2$ and $2n_1^2-2n_1n_2+2n_2^2+3n_3^2$.
+
+A subtorus $U$ is discarded when some point of a grid $\{(i/Q,j/Q)\}$ in its coordinates has $G>5/16$. The grids $Q\in\{12,60,420,16,80,208\}$ discard all but $5{,}004$ bases, which represent $123$ subtori up to symmetry. For each of these an exact maximization (Section~\ref{sec:comp}) finds a maximizer, and that point is a certificate: $92$ of the $123$ have a point with $G>5/16$ and are discarded, and the remaining $31$ have $\ML\le 5/16$.
+
+\begin{proposition}\label{prop:list}
+Up to symmetry there are exactly $31$ coordinate-free two-dimensional subtori $U\subseteq\T^4$ with $\ML(U)\le 5/16$. They are listed in Table~\ref{tab:tori}. Exactly two of them have $\ML(U)=1/4$, namely
+\[
+ \Uone=\{(X,Y,2Y,3Y)\},\qquad \Utwo=\{(X,Y,X+Y,X+2Y)\},
+\]
+and the other $29$ satisfy $2/7\le\ML(U)\le 5/16$ and $\covol(U)^2\le 422$. There is no coordinate-free two-dimensional subtorus with $\ML(U)<1/4$.
+\end{proposition}
+\begin{proof}
+The enumeration described above is complete by Lemma~\ref{lem:reduce}, and a subtorus is discarded only on the evidence of an explicit point. For each of the $31$ listed subtori the table gives a point attaining the stated value, which proves the lower bounds, in particular $\ML\ge 2/7$ for the $29$ subtori other than $\Uone$ and $\Utwo$. The exact values $\ML(\Uone)=\ML(\Utwo)=1/4$ are proved in Lemmas~\ref{lem:U1cells} and \ref{lem:U2cells}. The upper bounds $\ML\le 5/16$ for the other $29$ come from the exact maximization and are not used in the sequel. The last sentence holds because the list contains all coordinate-free subtori with $\ML\le 5/16$ and the smallest value in it is $1/4$.
+\end{proof}
+
+Up to symmetry, $\Uone$ and $\Utwo$ are the subtori $\langle(0,1,2,3),(1,0,0,0)\rangle$ and $\langle(1,0,1,1),(1,1,0,2)\rangle$ of \cite[Section~3.3]{JainKravitz}, and the last two assertions of the proposition recover the classification given there. The values occurring in Table~\ref{tab:tori} are $1/4,2/7,3/10,4/13,5/16$, that is, the values $s/(3s+1)$ of the three-runner spectrum \cite[Theorem~7.2]{Kravitz}, which is consistent with the inclusion $\mathcal S_2(4)\subseteq\mathcal S^*_1(3)$ of \cite{GiriKravitz}.
+
+\section{Circles of length at least $512$}
+\begin{lemma}\label{lem:strip}
+Let $T_v\subseteq U$ with $U$ a two-dimensional subtorus of covolume $A$ and $V=\eucl v$. Every point of $U$ lies within Euclidean distance $A/(2V)$ of $T_v$, and hence $\ML(T_v)\ge\ML(U)-A/(2V)$.
+\end{lemma}
+\begin{proof}
+In the plane $E=\R\Lambda_U$ the lattice $\Lambda_U$ contains $v$ as a primitive vector, so $\Lambda_U=\Z v+\Z\lambda$ for some $\lambda$, and the lines $\R v+k\lambda$, $k\in\Z$, are parallel at mutual distance $A/V$, because the parallelogram spanned by $v$ and $\lambda$ has area $A$ and base $V$. Each of these lines maps onto $T_v$ in $\T^4$. Every point of $E$ is within $A/(2V)$ of one of the lines. The inequality follows from \eqref{eq:lip} and $\supn{\cdot}\le\eucl{\cdot}$.
+\end{proof}
+
+\begin{proposition}\label{prop:large}
+Let $v\in\Z^4$ be primitive with all $v_i\ne 0$, $\ML(T_v)<1/4$ and $\eucl v\ge 512$. Then, up to symmetry, $T_v\subseteq\Uone$ or $T_v\subseteq\Utwo$.
+\end{proposition}
+\begin{proof}
+Put $V=\eucl v=\covol(T_v)$. Lemma~\ref{lem:density} with $k=1$ gives a two-dimensional subtorus $U\supseteq T_v$ with
+\[
+ \ML(U)\ \le\ \ML(T_v)+\tfrac12V^{-1/3}\ <\ \tfrac14+\tfrac1{16}=\tfrac5{16}.
+\]
+$U$ is coordinate-free, so by Proposition~\ref{prop:list} it is one of the $31$ subtori up to symmetry. If $U$ is one of the $29$ subtori with $\ML(U)\ge 2/7$, Lemma~\ref{lem:strip} gives $\frac14>\ML(T_v)\ge\frac27-\frac{A}{2V}$, hence $V<14A\le 14\sqrt{422}<288$, a contradiction. So $U$ is $\Uone$ or $\Utwo$ up to symmetry.
+\end{proof}
+
+\begin{remark}\label{rem:generaln}
+Nothing in Lemma~\ref{lem:density} is special to dimension four. In $(\R/\Z)^n$ the same argument gives a vector $w$ with $\supn{\pi(w)}\le\covol(S)^{-1/(n-k)}$, so a circle of length $V$ is $\frac12V^{-1/(n-1)}$-dense in a two-dimensional subtorus. Section~\ref{sec:general} uses the $n$-dimensional form of the lemma to make the reduction of near-tight tuples to critical subtori in \cite[Lemma~2.4]{Cordella} effective for every $n$.
+\end{remark}
+
+\begin{lemma}\label{lem:families}
+Let $v\in\Z^4$ be primitive with all $v_i\ne0$. If $T_v\subseteq\Uone$ up to symmetry, then $\{|v_i|\}=\{a,b,2b,3b\}$ for integers $a,b\ge 1$. If $T_v\subseteq\Utwo$ up to symmetry, then $\{|v_i|\}=\{x,y,x+y,x+2y\}$ for integers $x,y\ge 1$.
+\end{lemma}
+\begin{proof}
+$T_v\subseteq U$ means $v\in\Lambda_U$. The lattices are $\Lambda_{\Uone}=\Z(1,0,0,0)+\Z(0,1,2,3)$ and $\Lambda_{\Utwo}=\Z(1,0,1,1)+\Z(0,1,1,2)$ (their Pl\"ucker coordinates have greatest common divisor $1$, so these lattices are primitive). A signed permutation of $v$ is therefore $(a,b,2b,3b)$, respectively $(x,y,x+y,x+2y)$, for integers $a,b$, respectively $x,y$, and the multiset of absolute values is $\{|a|,|b|,2|b|,3|b|\}$, respectively $\{|x|,|y|,|x+y|,|x+2y|\}$. In the first case replace $a,b$ by their absolute values. In the second case, if $x$ and $y$ have opposite signs, say $x>0>y$ and $y'=-y$, then the multiset is $\{x,y',|x-y'|,|x-2y'|\}$. If $x>2y'$ it equals $V(x-2y',y')$, if $y'<x<2y'$ it equals $V(2y'-x,x-y')$, and if $x<y'$ it equals $V(x,y'-x)$. The cases $x=y'$ and $x=2y'$ produce a zero coordinate and are excluded.
+\end{proof}
+
+\section{The exhaustive search and the proof of Theorem~\ref{thm:main}}\label{sec:search}
+By Proposition~\ref{prop:large} and Lemma~\ref{lem:families}, every primitive quadruple $v$ with $\ML(v)<1/4$ is of the form $\{a,b,2b,3b\}$ or $\{x,y,x+y,x+2y\}$, or satisfies $\eucl v<512$. The two families are analyzed in Section~\ref{sec:families}. For the remaining case we enumerate all $800{,}816{,}099$ primitive quadruples $v_1<v_2<v_3<v_4$ with $v_1^2+v_2^2+v_3^2+v_4^2<512^2$ and decide for each whether $\ML(v)<1/4$. A quadruple is accepted as soon as some time $t=j/Q$ from a fixed list of $727$ rational times with $Q\le 512$ has $\norm{v_it}\ge\frac14$ for all $i$. The $16{,}649$ quadruples that pass no such test are handled by the exact corner computation of Lemma~\ref{lem:corner}. Exactly $14{,}032$ quadruples have $\ML<1/4$. All of them belong to one of the two families, with the single exception
+\[
+ v=(1,3,4,14),\qquad \ML(1,3,4,14)=\tfrac4{17},
+\]
+attained at $t=7/17$, where $(\norm{7/17},\norm{21/17},\norm{28/17},\norm{98/17})=(7,4,6,4)/17$. This quadruple was first observed by Cordella \cite[Section~6.3]{Cordella}, whose search covered all quadruples with speeds at most $200$. Restricting our output to that range reproduces his counts exactly: $4{,}125$ primitive quadruples with $\ML<1/4$, of which $3{,}836$ have $k=1$ and $289$ have $k=2$ in the notation $\ML=s/(4s+k)$, with $50$ on $\Uone$ and $4{,}075$ on $\Utwo$ (one quadruple on both) and one on neither. That $(1,3,4,14)$ is in neither family is immediate: it contains no triple $\{b,2b,3b\}$, and the two smallest elements of $V(x,y)$ are $x$ and $y$, so $V(x,y)=\{1,3,4,14\}$ would force $\{x,y\}=\{1,3\}$, but $V(1,3)=\{1,3,4,7\}$ and $V(3,1)=\{1,3,4,5\}$. The quadruple lies on the subtorus $\{(X,Y,X+Y,2X+4Y)\}$, which appears in Table~\ref{tab:tori} with $\ML=2/7$ and covolume $\sqrt{27}$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let $V$ be a primitive quadruple with $\ML(V)<1/4$. By the discussion above, $V$ is $\{a,b,2b,3b\}$, or $V(x,y)$, or $\{1,3,4,14\}$. Theorem~\ref{thm:U1} shows that $\{a,b,2b,3b\}$ has $\ML<1/4$ only for $b=1$ and $4\mid a$, with the value in (a). Theorem~\ref{thm:U2} shows that $V(x,y)$ has $\ML<1/4$ exactly under the congruence conditions in (b), with the stated value, and gives $\ML(V(x,y))=1/4$ otherwise. Conversely each listed quadruple has the stated value below $1/4$. For the overlap statement, note that the two smallest elements of $V(x,y)$ are $x$ and $y$, so $\{1,2,3,4k\}=V(x,y)$ forces $\{x,y\}=\{1,2\}$, and $V(1,2)=\{1,2,3,5\}$ is not of the form $\{1,2,3,4k\}$ while $V(2,1)=\{1,2,3,4\}$ is. The sporadic quadruple belongs to neither family by Section~\ref{sec:search}.
+\end{proof}
+
+\section{The two infinite families}\label{sec:families}
+For a circle $T\subseteq U$ in a two-dimensional subtorus, the value $\ML(T)$ is the largest $d$ such that $T$ meets the superlevel set $S_d=\{x\in U:G(x)\ge d\}$. We describe $S_d$ explicitly on $\Uone$ and $\Utwo$ and use Lemma~\ref{lem:orbit}.
+
+\subsection{The family $\{a,b,2b,3b\}$}
+Identify $\Uone$ with $\T^2$ through $(X,Y)\mapsto(X,Y,2Y,3Y)$, so that $G=\min(\norm X,\norm Y,\norm{2Y},\norm{3Y})$, and the circle of $(a,b)$ is $\{(at,bt)\}$.
+
+\begin{lemma}\label{lem:U1cells}
+For $\frac15<d\le\frac14$,
+\[
+ S_d=\bigl[d,1-d\bigr]\times\Bigl(\bigl[d,\tfrac{1-d}{3}\bigr]\cup\bigl[\tfrac{2+d}{3},1-d\bigr]\Bigr)\subseteq[0,1)^2 .
+\]
+In particular $\ML(\Uone)=1/4$, attained exactly on the two segments $Y\in\{\frac14,\frac34\}$, $X\in[\frac14,\frac34]$.
+\end{lemma}
+\begin{proof}
+The condition on $X$ is $\norm X\ge d$. For $Y\in[0,\frac12]$ the three conditions $\norm Y,\norm{2Y},\norm{3Y}\ge d$ read $Y\in[d,1-d]$, $Y\in[\frac d2,\frac{1-d}2]$, and $Y\in[\frac d3,\frac{1-d}3]\cup[\frac{1+d}3,\frac{2-d}3]$. Their intersection is $[d,\frac{1-d}3]\cup[\frac{1+d}3,\frac{1-d}2]$, and the second interval is empty exactly when $d>\frac15$. The first is nonempty exactly when $d\le\frac14$. The symmetry $Y\mapsto 1-Y$ gives the other piece.
+\end{proof}
+
+\begin{theorem}\label{thm:U1}
+Let $a,b\ge1$ be coprime with $a\notin\{b,2b,3b\}$. Then $\ML(a,b,2b,3b)=1/4$ unless $b=1$ and $4\mid a$, in which case $\ML(1,2,3,a)=a/(4a+4)$.
+\end{theorem}
+\begin{proof}
+Since $\Uone$ contains the circle, $\ML(a,b,2b,3b)\le\ML(\Uone)=\frac14$. By Lemma~\ref{lem:orbit} the circle is $\{bX-aY\in\Z\}$. Its image under $\phi(X,Y)=bX-aY$ on the segment $Y=\frac14$, $X\in[\frac14,\frac34]$ is an interval of length $\frac b2$. If $b\ge2$ it contains an integer, so $\ML=\frac14$. Let $b=1$. The interval is $[\frac{1-a}4,\frac{3-a}4]$, which contains an integer exactly when $4\nmid a$. Let $a=4k$. On the rectangle $R_d=[d,1-d]\times[d,\frac{1-d}3]$ the image of $\phi$ is $[\,d-\frac{4k(1-d)}3,\ 1-d-4kd\,]$. As $d$ decreases from $\frac14$, the upper end increases from $\frac34-k$ and reaches the integer $1-k$ at $d=\frac{k}{4k+1}$, while the lower end decreases from $\frac14-k$ and reaches the integer $-k$ at $d=\frac{k}{4k+3}<\frac k{4k+1}$. The other rectangle behaves in the same way by the symmetry $(X,Y)\mapsto(1-X,1-Y)$. Since $\frac k{4k+1}\ge\frac15$ for $k\ge1$, Lemma~\ref{lem:U1cells} applies for all $d\in(\frac15,\frac14]$ and the first contact of the circle with $S_d$ occurs at $d=\frac k{4k+1}$. If $k\ge2$ this is above $\frac15$ and we are done. If $k=1$ the circle misses $S_d$ for $d>\frac15$, so $\ML\le\frac15$, and the contact at $d=\frac15$ lies in the rectangle, which is part of $S_{1/5}$, so $\ML=\frac15$. Finally $\frac k{4k+1}=\frac a{4a+4}$.
+\end{proof}
+The values $k/(4k+1)$ are Kravitz's family $\ML(1,2,\dots,n-1,ns)=s/(ns+1)$ \cite[Theorem~5.1]{Kravitz}, here with $n=4$.
+
+\subsection{The family $V(x,y)$}
+Identify $\Utwo$ with $\T^2$ through $(X,Y)\mapsto(X,Y,X+Y,X+2Y)$, so that
+\[
+ G(X,Y)=\min\bigl(\norm X,\norm Y,\norm{X+Y},\norm{X+2Y}\bigr),
+\]
+and the circle of $(x,y)$ is $\{yX-xY\in\Z\}$ by Lemma~\ref{lem:orbit}.
+
+\begin{lemma}\label{lem:U2cells}
+For $0<d\le\frac14$, the set $S_d\cap[0,1)^2$ is the disjoint union of the four triangles
+\begin{align*}
+ \Delta_1(d)&=\{X\ge d,\ Y\ge d,\ X+2Y\le 1-d\},\\
+ \Delta_2(d)&=(1,1)-\Delta_1(d),\\
+ \Delta_3(d)&=\{X\ge d,\ X+Y\le 1-d,\ X+2Y\ge 1+d\},\\
+ \Delta_4(d)&=(1,1)-\Delta_3(d).
+\end{align*}
+Writing $d=\frac14-\varepsilon$, these are $c_j+\varepsilon Q_j$ with centres and vertex sets
+\begin{align*}
+ c_1&=(\tfrac14,\tfrac14),& Q_1&=\operatorname{conv}\{(-1,-1),(-1,1),(3,-1)\},\\
+ c_3&=(\tfrac14,\tfrac12),& Q_3&=\operatorname{conv}\{(-1,0),(-1,2),(3,-2)\},
+\end{align*}
+and $c_2=-c_1$, $Q_2=-Q_1$, $c_4=-c_3$, $Q_4=-Q_3$. In particular $\ML(\Utwo)=\frac14$, attained exactly at $c_1,c_2,c_3,c_4$.
+\end{lemma}
+\begin{proof}
+For $(X,Y)\in[0,1)^2$ we have $X,Y\in[0,1)$, $X+Y\in[0,2)$ and $X+2Y\in[0,3)$. The condition $G\ge d$ means $d\le X\le 1-d$, $d\le Y\le 1-d$, $k_3+d\le X+Y\le k_3+1-d$ for some $k_3\in\{0,1\}$ and $k_4+d\le X+2Y\le k_4+1-d$ for some $k_4\in\{0,1,2\}$. The pair $(k_3,k_4)=(0,2)$ is impossible, since $X+Y\le 1-d$ and $X+2Y\ge 2+d$ give $Y\ge 1+2d$. The pair $(1,0)$ is impossible, since $X+Y\ge 1+d$ and $X+2Y\le 1-d$ give $Y\le-2d$. For $(0,0)$ the conditions reduce to $\Delta_1(d)$: the inequalities $X\ge d$, $Y\ge d$, $X+2Y\le 1-d$ imply $X+Y\le 1-2d$, $X\le 1-3d$, $Y\le\frac{1-2d}2$, $X+Y\ge 2d$ and $X+2Y\ge 3d$, which are all the remaining constraints. For $(0,1)$ the conditions reduce to $\Delta_3(d)$: the inequalities $X\ge d$, $X+Y\le1-d$, $X+2Y\ge 1+d$ imply $Y\ge 2d$, $Y\le 1-2d$, $X\le 1-3d$, $X+Y\ge 3d$ and $X+2Y\le 2-3d$. The pairs $(1,2)$ and $(1,1)$ are the images of $(0,0)$ and $(0,1)$ under $(X,Y)\mapsto(1-X,1-Y)$, which preserves $G$. The vertices of $\Delta_1(d)$ are $(d,d)$, $(d,\frac{1-2d}2)$ and $(1-3d,d)$, those of $\Delta_3(d)$ are $(d,\frac12)$, $(d,1-2d)$ and $(1-3d,2d)$, and substituting $d=\frac14-\varepsilon$ gives the stated form. The triangles are nonempty exactly for $d\le\frac14$ and reduce to the centres at $d=\frac14$.
+\end{proof}
+
+\begin{theorem}\label{thm:U2}
+Let $x,y\ge1$ be coprime with $x\ne y$, and let $r=(y-x)\bmod4$, $r'=(y-2x)\bmod 4$. Then $\ML(V(x,y))=\frac14$ if $r=0$ or $r'=0$, and otherwise
+\begin{equation}\label{eq:U2formula}
+ \ML(V(x,y))=\frac14-\min\Bigl\{\frac{r}{4(x+y)},\frac{4-r}{4(x+3y)},\frac{r'}{4(2x+y)},\frac{4-r'}{4(2x+3y)}\Bigr\}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $\phi(X,Y)=yX-xY$. By Lemma~\ref{lem:U2cells}, the circle meets $S_d$, $d=\frac14-\varepsilon$, if and only if some integer lies in $\phi(c_j+\varepsilon Q_j)$ for some $j$. The image of a triangle is the interval between the smallest and largest values at its vertices. For $Q_1$ the vertex values of $\phi$ are $x-y$, $-x-y$ and $3y+x$, so $\phi(c_1+\varepsilon Q_1)=[\,c-\varepsilon(x+y),\ c+\varepsilon(x+3y)\,]$ with $c=\phi(c_1)=\frac{y-x}4$, where we used $x,y>0$. The nearest integers to $c$ are $c-\frac r4$ and $c+\frac{4-r}4$ when $r\ne0$, and $c$ itself when $r=0$. So the circle meets $\Delta_1(d)$ exactly when $r=0$ or $\varepsilon\ge\min\{\frac r{4(x+y)},\frac{4-r}{4(x+3y)}\}$. Since $\phi(-p)=-\phi(p)$, the triangle $\Delta_2(d)$ gives the same condition. For $Q_3$ the vertex values are $-y$, $-y-2x$ and $3y+2x$, the centre value is $\phi(c_3)=\frac{y-2x}4$, and the condition is $r'=0$ or $\varepsilon\ge\min\{\frac{r'}{4(2x+y)},\frac{4-r'}{4(2x+3y)}\}$, again shared by $\Delta_4(d)$. Thus $\ML(V(x,y))=\frac14-\varepsilon^*$ with $\varepsilon^*$ the smallest $\varepsilon\ge 0$ meeting one of the conditions, which is the statement. The description of $S_d$ is valid for all $d\in(0,\frac14]$, and $\varepsilon^*<\frac14$ because $\ML(V(x,y))>0$, so no further case distinction is needed.
+\end{proof}
+
+\begin{lemma}\label{lem:parity}
+In the situation of Theorem~\ref{thm:U2} with $r,r'\ne0$, the minimum in \eqref{eq:U2formula} equals $\frac1{4(2m+1)}$ with $m=m(x,y)=\max(m_1,m_3)$ as in \eqref{eq:m}, where $m_1,m_3$ are integers. Consequently $\ML(V(x,y))=m/(4m+2)$.
+\end{lemma}
+\begin{proof}
+Compare the two terms coming from $c_1$. If $r=1$, then $\frac1{4(x+y)}\le\frac3{4(x+3y)}$ since $x+3y\le 3x+3y$. If $r=3$, then $\frac1{4(x+3y)}\le\frac3{4(x+y)}$. If $r=2$, then $\frac2{4(x+3y)}\le\frac2{4(x+y)}$. So the smaller of the two is $\frac1{4(2m_1+1)}$ with $2m_1+1=x+y$, $\frac{x+3y}2$, $x+3y$ for $r=1,2,3$. These are odd integers: $y\equiv x+1\pmod4$ gives $x+y\equiv 2x+1\pmod 4$, odd. Next, $y\equiv x+2$ gives $x+3y\equiv 4x+6\equiv2\pmod4$, so $\frac{x+3y}2$ is odd. Finally $y\equiv x+3$ gives $x+3y\equiv 4x+9$, odd. The same comparison for $c_3$ yields $2m_3+1=2x+y$, $\frac{2x+3y}2$, $2x+3y$ for $r'=1,2,3$, odd by $y\equiv 2x+1$, $y\equiv2x+2$ (then $2x+3y\equiv 8x+6\equiv 2\pmod 4$) and $y\equiv 2x+3$. The minimum of the four terms is $\frac1{4(2m+1)}$ with $m=\max(m_1,m_3)$, and $\frac14-\frac1{4(2m+1)}=\frac{m}{4m+2}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:values}]
+By Theorem~\ref{thm:main}, every value below $\frac14$ is $k/(4k+1)=2k/(4\cdot2k+2)$, or $m(x,y)/(4m(x,y)+2)$, or $4/17=8/34$. All are of the form $m/(4m+2)$ with $m\ge 1$. We show $m\ge2$, $m\ne 3$, and that every other $m$ occurs.
+
+\emph{$m\ge2$.} The value $1/6$ would contradict $\ML\ge\frac15$, which is the Lonely Runner Conjecture for four speeds \cite{CusickPomerance,Bienia}. Directly: $m_1=1$ requires $r=1$ and $x+y=3$, or $r=2$ and $x+3y=6$, so $(x,y)\in\{(1,2),(3,1)\}$. For $(1,2)$ one has $r'=0$, and $(3,1)$ has $r'=3$ and $m_3=4$. And $m_3=1$ requires $r'=1$ and $2x+y=3$, which forces $x=y=1$, excluded, or $r'\in\{2,3\}$ and $2x+3y\in\{6,3\}$, which has no solution with $x,y\ge1$ coprime.
+
+\emph{$m\ne3$.} Suppose $m(x,y)=3$. If $m_1=3$ then either $r=1$ and $x+y=7$ with $y\equiv x+1\pmod 4$, so $(x,y)\in\{(1,6),(3,4),(5,2)\}$, or $r=3$ and $x+3y=7$ with $y\equiv x+3$, which has no solution with $x,y\ge1$, or $r=2$ and $x+3y=14$ with $y\equiv x+2$, so $(x,y)\in\{(5,3),(11,1)\}$ after discarding $(2,4)$ and $(8,2)$, which are not coprime. For $(1,6)$ and $(5,2)$ one has $r'=0$, while $(3,4)$, $(5,3)$, $(11,1)$ give $m_3=4,6,12$, all larger than $3$. If $m_3=3$ then either $r'=1$ and $2x+y=7$ with $y\equiv 2x+1$, which fails for $(1,5),(2,3),(3,1)$, or $r'=3$ and $2x+3y=7$ with $y\equiv 2x+3$, which fails for $(2,1)$, or $r'=2$ and $2x+3y=14$ with $y\equiv 2x+2$, which leaves $(1,4)$ after discarding $(4,2)$, and then $r=3$ gives $m_1=6>3$. So $m=3$ never occurs.
+
+\emph{Attainment.} Even $m=2k$ occurs for $\{1,2,3,4k\}$. For $(x,y)=(1,7)$ one has $r=2$, $m_1=5$, $r'=1$, $m_3=4$, so $\ML(1,7,8,15)=5/22$. For $(x,y)=(4s+3,8)$, $s\ge0$, one has $r=1$, $m_1=2s+5$, $r'=2$, $m_3=2s+7$, so $\ML(V(4s+3,8))=(2s+7)/(8s+30)$, which is the family of Fan and Sun and covers every odd $m\ge7$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:consequences}]
+(i) $m/(4m+2)$ equals $s/(4s+1)$ with $s=m/2$ if $m$ is even, and $s/(4s+2)$ with $s=m$ if $m$ is odd. (ii) $\ML=\frac15$ means $m=2$. In family (a) this is $k=1$. In family (b), $m_1=2$ requires $r=1$ and $x+y=5$, giving $(2,3)$ and $(4,1)$, or $r=3$ and $x+3y=5$, giving $(2,1)$, or $r=2$ and $x+3y=10$, giving $(1,3)$ and $(7,1)$. Similarly $m_3=2$ requires $r'=1$ and $2x+y=5$, giving $(1,3)$ and $(2,1)$, or $r'=3$ and $2x+3y=5$, giving $(1,1)$, excluded, or $r'=2$ and $2x+3y=10$, giving $(2,2)$, excluded. Among these, $m(x,y)=2$ holds exactly for $(2,1)$ and $(1,3)$, since $(2,3)$, $(4,1)$, $(7,1)$ have $m_3=6,4,8$. These give $\{1,2,3,4\}$ and $\{1,3,4,7\}$. (iii) The next value is $2/9$.
+\end{proof}
+
+
+\section{Two-dimensional subtori below one third}\label{sec:second}
+The list of Section~\ref{sec:two} stops at $5/16$ because the circle argument needs no more. The same tools determine every coordinate-free two-dimensional subtorus with loneliness below $1/3$, and the answer has a clean form: the values are exactly the three-runner values $s/(3s+1)$ of \cite[Theorems~5.1 and 7.2]{Kravitz}, and the subtori are products with a three-runner circle or members of one explicit two-parameter family. Write
+\[
+ F(n_1,n_2)=\{(a,\ b,\ a+b,\ n_1a+n_2b):(a,b)\in\T^2\},
+\]
+for $(n_1,n_2)\in\Z^2\setminus\{0\}$, a coordinate-free two-dimensional subtorus of $\Wtwo$, and for a triple $(a,b,c)$ of positive integers write $T_{(a,b,c)}\times\T=\{(at,bt,ct,u)\}$, a product subtorus with $\ML(T_{(a,b,c)}\times\T)=\ML(a,b,c)$. Note that $F(1,2)=\Utwo$, that $(1,3,4,14)$ lies on $F(2,4)$, and that $\Uone$ is the product $T_{(1,2,3)}\times\T$ up to symmetry.
+
+\begin{lemma}\label{lem:third-reduce}
+Let $U$ be a coordinate-free two-dimensional subtorus with $\ML(U)<1/3$. Then either $\covol(U)<56.25$, or $U$ lies, up to symmetry, in $\Wone$ or in $\Wtwo$.
+\end{lemma}
+\begin{proof}
+As in the proof of Lemma~\ref{lem:reduce}: Lemma~\ref{lem:density} gives $W\supseteq U$ with $\ML(U)\ge\ML(W)-\frac12A^{-1/2}$, and if $W$ is not special then $\frac12A^{-1/2}>\frac25-\frac13=\frac1{15}$, so $A<(15/2)^2$.
+\end{proof}
+
+\begin{lemma}[Subtori of $\Wone$]\label{lem:W1sub}
+Let $U=U_n\subseteq\Wone$ be coordinate-free, with $n=(n_1,n_2,n_3)\in\Z^3$ primitive in the coordinates $(y,z,u)$ of $\Wone=\{(2y,y,z,u)\}$. If $(n_2,n_3)\in\{(\pm1,0),(0,\pm1)\}$ then $U$ is the product $T_{(1,2,|n_1|)}\times\T$ up to symmetry, so $\ML(U)=\ML(1,2,|n_1|)$, which equals $s/(3s+1)$ if $|n_1|=3s$ and $1/3$ otherwise. In every other case $\ML(U)=1/3$.
+\end{lemma}
+\begin{proof}
+Always $\ML(U)\le\ML(\Wone)=1/3$. The case $(n_2,n_3)=(0,0)$ forces $n=\pm e_1$ and $y\in\Z$, which is not coordinate-free. If $(n_2,n_3)=(\pm1,0)$ then $z=\mp n_1y$ on $U$ and $u$ is free, so $U=\{(2y,y,\mp n_1y,u)\}$ is the stated product ($n_1\ne0$ since $U$ is coordinate-free). The circle $(2y,y,n_1y)$ has speeds $\{1,2,|n_1|\}$, and $\ML(1,2,k)=1/3$ for $3\nmid k$ by the time $t=1/3$ and the bound $\ML(1,2)=1/3$, while $\ML(1,2,3s)=s/(3s+1)$ by \cite[Theorem~5.1]{Kravitz}. The case $(0,\pm1)$ is the same with $z,u$ exchanged. In the remaining cases we exhibit a point of $U$ with $G=1/3$: take $y=1/3$ and $(z,u)\in[\frac13,\frac23]^2$ with $n_2z+n_3u\equiv-n_1/3\pmod 1$. The set $\{n_2z+n_3u:z,u\in[\frac13,\frac23]\}$ is an interval of length $(|n_2|+|n_3|)/3$. If $|n_2|+|n_3|\ge3$ it contains every residue class. If $(n_2,n_3)=(\pm1,\pm1)$ or $(\pm2,0)$ or $(0,\pm2)$ it is, up to sign, $[\frac23,\frac43]$ or $[-\frac13,\frac13]$, and both contain a representative of each of the classes $0,\frac13,\frac23\pmod1$, which are the only possible values of $-n_1/3$.
+\end{proof}
+
+\begin{lemma}[Sum triangle]\label{lem:sumcells}
+For $0<d\le\frac13$,
+\[
+ \{(a,b)\in[0,1)^2:\norm a,\norm b,\norm{a+b}\ge d\}=\Delta(d)\cup\bigl((1,1)-\Delta(d)\bigr),
+\]
+where $\Delta(d)=\{a\ge d,\ b\ge d,\ a+b\le 1-d\}$. With $d=\frac13-\varepsilon$,
+\[
+ \Delta(d)=\bigl(\tfrac13,\tfrac13\bigr)+\varepsilon\operatorname{conv}\{(-1,-1),(-1,2),(2,-1)\}.
+\]
+\end{lemma}
+\begin{proof}
+The constraints are $a,b\in[d,1-d]$ and $a+b\in[d,1-d]\cup[1+d,2-d]$. In the first case $a+b\le1-d$ together with $a,b\ge d$ already implies $a,b\le 1-2d$ and $a+b\ge 2d$, which gives $\Delta(d)$. The second case is its image under $(a,b)\mapsto(1-a,1-b)$. The vertices of $\Delta(d)$ are $(d,d)$, $(d,1-2d)$ and $(1-2d,d)$.
+\end{proof}
+
+\begin{lemma}[Subtori of $\Wtwo$]\label{lem:W2sub}
+Let $U=U_n\subseteq\Wtwo$ be coordinate-free, with $n=(n_1,n_2,n_3)$ primitive in the coordinates $(a,b,u)$ of $\Wtwo=\{(a,b,a+b,u)\}$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item If $|n_3|\ge2$ then $\ML(U)=1/3$.
+\item If $n_3=0$ then $U=T_{(|n_2|,|n_1|,|n_1-n_2|)}\times\T$ up to symmetry, and $\ML(U)$ is the loneliness of that triple.
+\item If $|n_3|=1$ then $\ML(U)=\ML(F(n_1,n_2))$, and
+\[
+ \ML(F(n_1,n_2))=\begin{cases}\dfrac13,&n_1+n_2\not\equiv0\pmod3,\\[8pt]\dfrac{M}{3(M+1)}=\dfrac{s}{3s+1},&n_1+n_2\equiv0\pmod 3,\end{cases}
+\]
+where in the second case $M=3s=\max\bigl(|n_1+n_2|,\,|2n_1-n_2|,\,|2n_2-n_1|\bigr)$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Always $\ML(U)\le\ML(\Wtwo)=\frac13$, and $G_2(\frac13,\frac13,u)=\frac13$ for every $u\in[\frac13,\frac23]$.
+
+(i) We need $u\in[\frac13,\frac23]$ with $n_3u\equiv-(n_1+n_2)/3\pmod1$. The set $\{n_3u\}$ is an interval of length $|n_3|/3$, which contains every class if $|n_3|\ge3$, and for $|n_3|=2$ it is $\pm[\frac23,\frac43]$, which meets each of the classes $0,\frac13,\frac23$.
+
+(ii) Since $n$ is primitive, $\gcd(n_1,n_2)=1$, and by Lemma~\ref{lem:orbit} the set $\{(a,b):n_1a+n_2b\in\Z\}$ is the circle $\{(n_2t,-n_1t)\}$. Hence $U=\{(n_2t,-n_1t,(n_2-n_1)t,u)\}$, with $n_1,n_2\ne0$ and $n_1\ne n_2$ because $U$ is coordinate-free.
+
+(iii) On $U$ the coordinate $u$ equals $\mp(n_1a+n_2b)$, and $G$ is invariant under changing the sign of a coordinate, so $\ML(U)=\ML(F(n_1,n_2))$. Put $\ell(a,b)=n_1a+n_2b$ and $d=\frac13-\varepsilon$. By Lemma~\ref{lem:sumcells}, $F(n_1,n_2)$ has a point with $G\ge d$ exactly when some point of $\Delta(d)\cup((1,1)-\Delta(d))$ has $\norm{\ell}\ge d$. The image of $\Delta(d)$ under $\ell$ is the interval $[\,\ell(c)-\varepsilon L,\ \ell(c)+\varepsilon H\,]$ with $c=(\frac13,\frac13)$, $\ell(c)=(n_1+n_2)/3$, and $-L$, $H$ the smallest and largest of the vertex values $-(n_1+n_2)$, $-n_1+2n_2$, $2n_1-n_2$ of $\ell$ on $\operatorname{conv}\{(-1,-1),(-1,2),(2,-1)\}$. The image of $(1,1)-\Delta(d)$ is the reflection of this interval in $\ell(1,1)/2$, which preserves distances to $\Z$. If $n_1+n_2\not\equiv0\pmod 3$ then $\norm{\ell(c)}=\frac13$ and $\varepsilon=0$ works. If $n_1+n_2\equiv0\pmod3$ then $\ell(c)\in\Z$, the image interval contains a point at distance at least $\frac13-\varepsilon$ from $\Z$ exactly when $\varepsilon\max(L,H)\ge\frac13-\varepsilon$, and $\max(L,H)=M$. The first contact is at $\varepsilon=1/(3(M+1))$, which lies in $(0,\frac16]$, so Lemma~\ref{lem:sumcells} applies throughout and $\ML(F(n_1,n_2))=\frac13-\frac1{3(M+1)}$. Finally $M$ is one of $|n_1+n_2|$, $|3n_1-(n_1+n_2)|$, $|3n_2-(n_1+n_2)|$, all divisible by $3$.
+\end{proof}
+
+\begin{proposition}\label{prop:third-enum}
+There are $63{,}906{,}892$ coordinate-free primitive rank-two sublattices of $\Z^4$ with covolume at most $57$. Of these, $3{,}267{,}840$ are contained in a signed permutation image of $\Wone$ or $\Wtwo$, and each of the remaining $60{,}639{,}052$ has a point $(i/Q,j/Q)$, $Q\in\{3,12,60,420,16,80,208\}$, at which $G\ge1/3$. Consequently every coordinate-free two-dimensional subtorus with $\ML<1/3$ lies in $\Wone$ or $\Wtwo$ up to symmetry.
+\end{proposition}
+\begin{proof}
+The enumeration is the one of Section~\ref{sec:two} with the larger bound (the count $63{,}906{,}892$ is again checked against the Pl\"ucker count for small covolumes). Containment in a special subtorus is decided by testing the characters $\pm e_i\pm2e_j$ and $\pm e_i\pm e_j\pm e_k$ ($80$ vectors, $40$ up to sign) against both basis vectors. The last sentence follows from Lemma~\ref{lem:third-reduce}.
+\end{proof}
+
+\begin{theorem}\label{thm:second}
+Let $U$ be a coordinate-free two-dimensional subtorus of $\T^4$. Then $\ML(U)<1/3$ if and only if, up to symmetry, $U$ is a product $T_{(a,b,c)}\times\T$ with $\ML(a,b,c)<1/3$, or $U=F(n_1,n_2)$ with $n_1+n_2\equiv0\pmod3$. In both cases $\ML(U)=s/(3s+1)$ for an integer $s\ge1$, namely the $s$ of \cite[Theorem~7.2]{Kravitz} for the triple (every $s\ge1$ occurs, by \cite[Theorem~5.1]{Kravitz}), and $s=\frac13\max(|n_1+n_2|,|2n_1-n_2|,|2n_2-n_1|)$ for $F(n_1,n_2)$. Every value $s/(3s+1)$, $s\ge1$, occurs, for instance on $F(s,2s)$.
+\end{theorem}
+\begin{proof}
+The subtori listed have the stated values by Lemma~\ref{lem:W2sub} and by \cite[Theorems~5.1 and 7.2]{Kravitz}, which together say that the values of $\ML$ on triples below $1/3$ are exactly the numbers $s/(3s+1)$, each attained by $(1,2,3s)$. Conversely, if $\ML(U)<1/3$, Proposition~\ref{prop:third-enum} places $U$ in $\Wone$ or $\Wtwo$ up to symmetry, and Lemmas~\ref{lem:W1sub} and \ref{lem:W2sub} leave only products with $\ML<1/3$ and $F(n_1,n_2)$ with $3\mid n_1+n_2$. For $F(s,2s)$ one has $M=3s$.
+\end{proof}
+
+A by-product is a structural statement about three speeds: a triple $(a,b,c)$ with $\ML(a,b,c)<1/3$ satisfies, up to order, $c=2b$ or $c=a+b$ after dividing by the common divisor (and in the first case the triple is $\{1,2,3s\}$ by Lemma~\ref{lem:W1sub}), since otherwise $T_{(a,b,c)}\times\T$ would be a subtorus with $\ML<1/3$ lying in no special three-dimensional subtorus, and Proposition~\ref{prop:third-enum} together with Lemma~\ref{lem:third-reduce} excludes this.
+
+\begin{corollary}\label{cor:acc}
+The set of accumulation points of the set of values $\ML(V)$, over all quadruples $V$ of distinct positive integers, that lie in $(0,\frac13)$ is $\{s/(3s+1):s\ge1\}$, the three-runner spectrum below $\frac13$.
+\end{corollary}
+\begin{proof}
+Giri and Kravitz prove \cite[Theorem~1.4]{GiriKravitz} that every accumulation point of the four-runner spectrum is the value of a subtorus of dimension at least two, and \cite[Theorem~1.3]{GiriKravitz} (from \cite{Kravitz}) that every three-runner value is an accumulation point. Two remarks reconcile the conventions. First, \cite{GiriKravitz} allows repeated speeds. A tuple with a repeated speed has the value of a set of at most three distinct speeds, and those values in $(0,\frac13)$ form the discrete set $\{s/(3s+1)\}$ by \cite[Theorems~5.1, 6.1 and 7.2]{Kravitz}, so a sequence of such values converging to a point of $(0,\frac13)$ is eventually constant, and the accumulation points in $(0,\frac13)$ are the same whether or not repeated speeds are allowed. Second, subtori contained in a coordinate hyperplane have value $0$ and three-dimensional subtori have value at least $\frac13$ by Lemma~\ref{lem:W13}, so in $(0,\frac13)$ the accumulation points lie in the set of values of coordinate-free two-dimensional subtori, which by Theorem~\ref{thm:second} is the three-runner spectrum below $\frac13$.
+\end{proof}
+
+In the notation of \cite{GiriKravitz}, with $D=\frac12-\ML$, this says $\operatorname{acc}(\mathcal S(4))\cap(\frac16,\frac12)=\mathcal S(3)\cap(\frac16,\frac12)$, which is the case $n=4$ of \cite[Conjecture~1.5]{GiriKravitz} on the interval $(\frac16,\frac12)$. The next subsection extends this to $D\ge\frac1{10}$.
+
+\subsection{From one third to two fifths}\label{sec:upto25}
+The method reaches the next accumulation point $\frac25=\ML(1,4)=\ML(2,3)$ of the three-runner spectrum. Two ingredients are new. Lemma~\ref{lem:shortchar} replaces the uniform bound $A^{-1/2}$ of Lemma~\ref{lem:density} by a bound in terms of a shortest character of the subtorus, which is much stronger when that character has a large $\ell^1$ norm. Lemma~\ref{lem:five} determines the values of all two-dimensional subtori of the five three-dimensional subtori with loneliness $\frac25$, which carry the infinitely many values that accumulate at $\frac25$. Put
+\begin{align*}
+ \mathcal R&=\Big\{\frac pq\in\Big[\frac13,\frac25\Big):\ \gcd(p,q)=1,\ 1\le 2q-5p\le 4\Big\}\\
+ &=\Big\{\frac13,\frac6{17},\frac5{14},\frac4{11},\frac7{19},\frac{10}{27},\frac38,\frac{14}{37},\dots\Big\}.
+\end{align*}
+For $p/q\in\mathcal R$ with $r=2q-5p$ we have $q\equiv3r\pmod5$, so $(p,q)=(2j+1,5j+3)$, $(2j,5j+1)$, $(2j+1,5j+4)$ or $(2j,5j+2)$ for $r=1,2,3,4$. Since $\frac{2j+1}{5j+3}=\frac{2J}{5J+2}$ with $J=4j+2$ and $\frac{2j}{5j+1}=\frac{2J}{5J+2}$ with $J=2j$, and since conversely $\frac{2j}{5j+2}$ and $\frac{2j+1}{5j+4}$ lie in $[\frac13,\frac25)$ for $j\ge2$ and have $2q-5p$ dividing $4$ and $3$ in lowest terms,
+\begin{equation}\label{eq:R}
+ \mathcal R=\Big\{\frac{2j}{5j+2}:j\ge2\Big\}\cup\Big\{\frac{2j+1}{5j+4}:j\ge2\Big\}.
+\end{equation}
+
+\begin{theorem}\label{thm:upto25}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item Every coordinate-free two-dimensional subtorus $U$ of $\T^4$ with $\ML(U)<\frac25$ has $\ML(U)\in\{\frac s{3s+1}:s\ge1\}\cup\mathcal R$.
+\item The values of $\ML$ on triples of positive integers below $\frac25$ are exactly the numbers $\frac s{3s+1}$, $s\ge1$, and the elements of $\mathcal R$. For $j\ge2$,
+\[
+ \ML(2,3,5j)=\frac{2j}{5j+2},\qquad \ML(1,4,5j+3)=\frac{2j+1}{5j+4}.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{lemma}[Shortest character]\label{lem:shortchar}
+Let $U$ be a two-dimensional subtorus of $\T^4$ with $A=\covol(U)$, and let $L=\{m\in\Z^4:m\cdot\lambda=0\text{ for all }\lambda\in\Lambda_U\}$ be its lattice of characters. Then $L$ is a primitive lattice of rank two with $\covol(L)=A$, and for every basis $m_1,m_2$ of $L$ we have $U\subseteq W_{m_1}$ and
+\[
+ \ML(U)\ \ge\ \ML(W_{m_1})-\frac{\eucl{m_1}}{2A}.
+\]
+\end{lemma}
+\begin{proof}
+$L=\Z^4\cap E^\perp$ with $E=\R\Lambda_U$, so $L$ is primitive of rank two. Every $x\in\Z^4$ satisfies $\pi(x)\cdot m=x\cdot m\in\Z$ for $m\in L$, and since $L$ is primitive every homomorphism $L\to\Z$ is of the form $m\mapsto x\cdot m$ with $x\in\Z^4$. Hence $\pi(\Z^4)$ is the dual lattice of $L$ in $E^\perp$, and Lemma~\ref{lem:density}(a) gives $\covol(L)=1/\covol(\pi(\Z^4))=A$. Choose $w\in\Z^4$ with $m_1\cdot w=0$ and $m_2\cdot w=1$. Then $w\notin\Lambda_U$, and the subtorus $S'$ with $\R\Lambda_{S'}=E+\R w$ has character lattice $\{m\in L:m\cdot w=0\}=\Z m_1$, so $S'=W_{m_1}$. The vector $\pi(w)\in E^\perp$ satisfies $\pi(w)\cdot m_1=0$ and $\pi(w)\cdot m_2=1$, so $\eucl{\pi(w)}=1/h$, where $h$ is the distance from $m_2$ to $\R m_1$. As $A=\eucl{m_1}h$, we get $\supn{\pi(w)}\le\eucl{\pi(w)}=\eucl{m_1}/A$, and Lemma~\ref{lem:density}(c) gives the inequality.
+\end{proof}
+
+\begin{lemma}\label{lem:Wodd}
+Let $m\in\Z^4$ be primitive with $|m|_1=\sum_i|m_i|\ge2$. Then $\ML(W_m)=\frac12$ if $|m|_1$ is even, and $\ML(W_m)=\frac s{2s+1}$ if $|m|_1=2s+1$. If $|m|_1=5$, then, up to symmetry, $W_m$ is one of
+\begin{gather*}
+ W_A=\{(y,4y,z,u)\},\quad W_B=\{(2y,3y,z,u)\},\\ W_C=\{(a,b,3a+b,u)\},\\
+ W_D=\{(a,b,2a+2b,u)\},\quad W_E=\{(a,b,c,2a+b+c)\},
+\end{gather*}
+where the parameters run over $\T$.
+\end{lemma}
+\begin{proof}
+Put $x_i=\operatorname{sgn}(m_i)\,t$ for $m_i\ne0$ and $x_i=\frac12$ for $m_i=0$, with $t=\lfloor\frac{|m|_1}2\rfloor/|m|_1$. Then $m\cdot x=\lfloor\frac{|m|_1}2\rfloor\in\Z$ and $G(x)=t$, which is $\frac12$ or $\frac s{2s+1}$. Conversely let $|m|_1=2s+1$, $c=\frac s{2s+1}$, and suppose $\norm{x_i}>c$ for all $i$ with $m_i\ne0$. Then $y_i=\operatorname{sgn}(m_i)x_i$ has a representative in $(c,1-c)$, and $m\cdot x=\sum_i|m_i|y_i$ lies in $((2s+1)c,(2s+1)(1-c))=(s,s+1)$, so $x\notin W_m$. Hence $\ML(W_m)\le c$. If $|m|_1=5$, then up to signed permutations the absolute values of the entries of $m$ are $(4,1,0,0)$, $(3,2,0,0)$, $(3,1,1,0)$, $(2,2,1,0)$ or $(2,1,1,1)$, and the five parametrizations are injective homomorphisms $\T^3\to\T^4$ onto $W_m$ for $m=(4,-1,0,0)$, $(3,-2,0,0)$, $(3,1,-1,0)$, $(2,2,-1,0)$, $(2,1,1,-1)$.
+\end{proof}
+
+\begin{lemma}\label{lem:generic25}
+Let $U$ be a coordinate-free two-dimensional subtorus with $\ML(U)<\frac25$ that is contained in no $W_m$ with $|m|_1\in\{3,5\}$. Then $\covol(U)<\frac{35}2\sqrt{37}$, that is, $\covol(U)^2\le11{,}331$.
+\end{lemma}
+\begin{proof}
+Let $A=\covol(U)$ and let $m_1$ be a shortest nonzero vector of $L$. It is part of a basis of $L$ and primitive in $\Z^4$. As $U$ is coordinate-free, $m_1\ne\pm e_i$, so $|m_1|_1\ge2$, and $|m_1|_1\notin\{3,5\}$ by hypothesis. Hermite's bound in rank two gives $\eucl{m_1}^2\le\frac2{\sqrt3}A$, and Lemmas~\ref{lem:shortchar} and~\ref{lem:Wodd} give $\frac25>\ML(U)\ge\ML(W_{m_1})-\eucl{m_1}/(2A)$. If $|m_1|_1$ is even, this gives $A<5\eucl{m_1}$, hence $\eucl{m_1}<10/\sqrt3$ and $A<50/\sqrt3$. If $|m_1|_1=7$, it gives $A<\frac{35}2\eucl{m_1}\le\frac{35}2\sqrt{37}$, since $\eucl m^2\le37$ for primitive $m$ with $|m|_1=7$. If $|m_1|_1=2s+1\ge9$, it gives $A<\frac{5(2s+1)}{2(s-2)}\eucl{m_1}$. For $s\le6$ use $\eucl{m_1}\le|m_1|_1$ to get $A<\frac{5(2s+1)^2}{2(s-2)}\le\frac{845}8$. For $s\ge7$, Hermite's bound gives $\eucl{m_1}<\frac{5(2s+1)}{\sqrt3(s-2)}$, while $\eucl{m_1}\ge\frac12|m_1|_1=\frac{2s+1}2$, so $s=7$ and $A<\frac{15}2\cdot\frac{15}{\sqrt3}<65$. In every case $A<\frac{35}2\sqrt{37}$, and $(\frac{35}2)^2\cdot37=11{,}331.25$.
+\end{proof}
+
+We now treat the five subtori of Lemma~\ref{lem:Wodd}. For $\tau\in\{A,B,C,D,E\}$ let $\varphi_\tau:\T^3\to W_\tau$ be the parametrization of Lemma~\ref{lem:Wodd} and $G_\tau=G\circ\varphi_\tau$. As in Section~\ref{sec:two}, the two-dimensional subtori of $W_\tau$ are the images of $U_n=\{y\in\T^3:n\cdot y\in\Z\}$ for primitive $n\in\Z^3$. Write $J(\varepsilon)=[\frac25-\varepsilon,\frac35+\varepsilon]$ and, for $0\le\varepsilon\le\frac1{15}$,
+\begin{align*}
+ P_A(\varepsilon)&=[\tfrac25-\varepsilon,\tfrac25+\tfrac\varepsilon4]\times J(\varepsilon)^2, & P_B(\varepsilon)&=[\tfrac15-\tfrac\varepsilon2,\tfrac15+\tfrac\varepsilon3]\times J(\varepsilon)^2,\\
+ P_C(\varepsilon)&=\big((\tfrac25,\tfrac25)+\varepsilon\Delta_C\big)\times J(\varepsilon), & P_D(\varepsilon)&=\big((\tfrac25,\tfrac25)+\varepsilon\Delta_D\big)\times J(\varepsilon),\\
+ P_E(\varepsilon)&=(\tfrac25,\tfrac25,\tfrac25)+\varepsilon\Delta_E,
+\end{align*}
+where
+\begin{align*}
+ \Delta_C&=\operatorname{conv}\{(-1,-1),(\tfrac23,-1),(-1,4)\},\\
+ \Delta_D&=\operatorname{conv}\{(-1,-1),(\tfrac32,-1),(-1,\tfrac32)\},\\
+ \Delta_E&=\operatorname{conv}\{(-1,-1,-1),(\tfrac32,-1,-1),(-1,4,-1),(-1,-1,4)\}.
+\end{align*}
+
+\begin{lemma}\label{lem:fivecells}
+For $0\le\varepsilon\le\frac1{15}$ the set $\{y\in\T^3:G_\tau(y)\ge\frac25-\varepsilon\}$ is the image of $P_\tau(\varepsilon)\cup(-P_\tau(\varepsilon))$.
+\end{lemma}
+\begin{proof}
+Put $d=\frac25-\varepsilon\in[\frac13,\frac25]$. The conditions $\norm z,\norm u\ge d$ mean $z,u\in[d,1-d]+\Z$, which is $J(\varepsilon)+\Z$, and $J(\varepsilon)=-J(\varepsilon)+1$. For $W_A$: if $y\in[0,\frac12]$, then $\norm y\ge d$ means $y\ge d$, and then $4y\in[\frac43,2]$, so $\norm{4y}\ge d$ means $4y\in[1+d,2-d]$. As $d\ge\frac13$, $\frac{1+d}4\le d$, so the solutions in $[0,\frac12]$ form $[d,\frac{2-d}4]=[\frac25-\varepsilon,\frac25+\frac\varepsilon4]$, and those in $[\frac12,1]$ are their negatives. For $W_B$: in $[0,\frac12]$, $\norm{2y}\ge d$ means $y\in[\frac d2,\frac{1-d}2]$, and $\norm{3y}\ge d$ means $y\in[\frac d3,\frac{1-d}3]\cup[\frac{1+d}3,\frac12]$. Since $\frac{1+d}3>\frac{1-d}2$ for $d>\frac15$, the intersection is $[\frac d2,\frac{1-d}3]=[\frac15-\frac\varepsilon2,\frac15+\frac\varepsilon3]$. For $W_C$, $W_D$, $W_E$ let $\ell$ be the last coordinate form, $3a+b$, $2a+2b$ or $2a+b+c$. Its coefficients are at least $1$ and sum to $4$. On the box where the other coordinates lie in $[d,1-d]$, $\ell$ takes values in $[4d,4-4d]\subseteq[\frac43,\frac83]$, so $\norm\ell\ge d$ means $\ell\in[1+d,2-d]\cup[2+d,3-d]$, and the bounds $1+d\le 4d$ and $4-4d\le 3-d$ are automatic. The set $\{\text{coordinates}\ge d,\ \ell\le 2-d\}$ already forces every coordinate to be at most $2-d-3d\le 1-d$, and the substitution $y\mapsto -y$ maps it onto $\{\ell\ge 2+d\}$ modulo $\Z^3$. Writing the coordinates as $\frac25+\varepsilon\delta_i$, the conditions read $\delta_i\ge-1$ and $3\delta_1+\delta_2\le1$, $\delta_1+\delta_2\le\frac12$, respectively $2\delta_1+\delta_2+\delta_3\le1$, which define $\Delta_C$, $\Delta_D$, $\Delta_E$.
+\end{proof}
+
+\begin{lemma}[Subtori of the five tori]\label{lem:five}
+Let $\tau\in\{A,B,C,D,E\}$ and let $n\in\Z^3$ be primitive with $\varphi_\tau(U_n)$ coordinate-free. If $\frac13\le\ML(U_n)<\frac25$, then $\ML(U_n)\in\mathcal R$.
+\end{lemma}
+\begin{proof}
+Write $V=\ML(U_n)=\frac25-\varepsilon^*$. Since $P_\tau(\varepsilon)$ is convex and $U_n$ lifts to $\{y\in\R^3:n\cdot y\in\Z\}$, Lemma~\ref{lem:fivecells} shows that for $\varepsilon\le\frac1{15}$ we have $V\ge\frac25-\varepsilon$ exactly when the interval $n\cdot P_\tau(\varepsilon)$ contains an integer (the set $-P_\tau$ gives the negative interval). Each $P_\tau(\varepsilon)$ is a product of intervals $[c-\varepsilon e,c'+\varepsilon e']$ and of a set $p+\varepsilon\Delta$, so
+\[
+ n\cdot P_\tau(\varepsilon)=[\alpha-\varepsilon a,\ \beta+\varepsilon b],
+\]
+where $\beta=n\cdot x_0$ and $b=n\cdot w$ for a vertex $x_0+\varepsilon w$ of $P_\tau(\varepsilon)$ at which $n\cdot y$ is maximal for every $\varepsilon\in(0,\frac1{15}]$, and similarly $\alpha$, $a$ at a minimal vertex. Here $x_0\in\frac15\Z^3$, so $\alpha,\beta\in\frac15\Z$. As $V<\frac25$, $[\alpha,\beta]$ contains no integer. Let $N=\lceil\beta\rceil$, $N'=\lfloor\alpha\rfloor$, $k=5(N-\beta)$ and $k'=5(\alpha-N')$, so $k,k'\in\{1,2,3,4\}$, and $\varepsilon^*=\min(\frac k{5b},\frac{k'}{5a})$ with $\frac k0=\infty$. Suppose first that the minimum is $\frac k{5b}$.
+
+At the vertex $x_0+\varepsilon w$ three linearly independent coordinate forms $\phi_i$, $i\in I$, of $\varphi_\tau$ are active, that is, $\sigma_i\phi_i(x_0+\varepsilon w)=\kappa_i+\frac25-\varepsilon$ with $\sigma_i=\pm1$ and $\kappa_i\in\Z$. Write $n=\sum_{i\in I}\lambda_i\sigma_i\phi_i$, so that $\lambda_i\in\frac1D\Z$ with $D=|\det(\phi_i)_{i\in I}|$, and put $K=\sum\lambda_i\kappa_i$ and $\Lambda=\sum\lambda_i$. Evaluating at $\varepsilon=0$ and $\varepsilon=\varepsilon^*$ gives $\beta=K+\frac25\Lambda$ and $N=K+V\Lambda$. Hence $V=P/Q$ with $P=D(N-K)$ and $Q=D\Lambda$ integers and $2Q-5P=5D(\beta-N)=-Dk$. As $V<\frac25$, writing $V=p/q$ in lowest terms gives $1\le2q-5p\le Dk$. If the minimum is $\frac{k'}{5a}$, the same argument for $-n$, which exchanges the two ends, gives $1\le2q-5p\le D'k'$, where $D'$ is the determinant at the minimal vertex. So $V\in\mathcal R$ whenever the end attaining the minimum has determinant $1$.
+
+The vertices with $D>1$ are the following. For $\tau=A$ the ends $y=\frac25+\frac\varepsilon4$ (form $4y$, $D=4$). For $\tau=B$ the ends $y=\frac15-\frac\varepsilon2$ ($2y$, $D=2$) and $y=\frac15+\frac\varepsilon3$ ($3y$, $D=3$). For $\tau=C$ the vertex $(\frac23,-1)$ ($D=3$). For $\tau=D$ the vertices $(\frac32,-1)$, $(-1,\frac32)$ ($D=2$). For $\tau=E$ the vertex $(\frac32,-1,-1)$ ($D=2$). We show that if an end at such a vertex attains the minimum and the product of its determinant and its $k$ exceeds $4$, then the other end attains the minimum as well, at a vertex with determinant $1$, or with determinant $2$ and $k\le2$. Since $V$ does not depend on which end is used, this proves the lemma.
+
+Types $A$ and $B$. Using the symmetries $y\mapsto-y$, $z\mapsto-z$, $u\mapsto-u$ we may take $n_1,n_2,n_3\ge0$, and $c=n_2+n_3\ge1$ since $\varphi_\tau(U_n)$ is coordinate-free. If $n_1=0$, then $\varphi_\tau(U_n)$ is the product of the circle of $(1,4)$ or $(2,3)$ with a circle in the $(z,u)$ plane, so $V=\min(\frac25,\ML(n_2,n_3))$, and $V\in[\frac13,\frac25)$ forces $V=\frac13\in\mathcal R$. Let $n_1\ge1$. The interval $[\alpha,\beta]$ has length $\frac c5$, so $k+k'=5-c$. For $A$, $a=n_1+c$, $b=\frac{n_1}4+c$, and the upper end has $D=4$, while the lower end has $D=1$. If $k\ge2$, then $k'\le3-c$, and $k a\ge 2n_1+2c>(3-c)(\frac{n_1}4+c)\ge k'b$, so $\frac k{5b}>\frac{k'}{5a}$ and the upper end is not the minimum. For $B$, $a=\frac{n_1}2+c$ and $b=\frac{n_1}3+c$. If the upper end ($D=3$) gives the minimum with $k\ge2$, then $k'\le3-c$ and $ka\ge n_1+2c>(3-c)(\frac{n_1}3+c)\ge k'b$, a contradiction. If the lower end ($D=2$) gives the minimum with $k'\ge3$, then $c=1$, $k=1$, $k'=3$, and $k'b=n_1+3>\frac{n_1}2+1=ka$, again a contradiction.
+
+Types $C$, $D$, $E$. Let $f$ be the linear form $n$ restricted to the $\delta$-coordinates of $\Delta_\tau$, and $M=\max_{\Delta_\tau}f$, $m=-\min_{\Delta_\tau}f$. As $0$ is an interior point of $\Delta_\tau$ and $f\ne0$ (otherwise $\varphi_\tau(U_n)$ lies in $\{u=0\}$), $M,m>0$. With $n_3\ge0$ for $C$ and $D$, we have $b=M+c$, $a=m+c$ with $c=n_3$ for $C$, $D$ and $c=0$ for $E$, and $k+k'=5-c$. The origin is the barycenter of the vertices of $\Delta_\tau$ with weights $(\frac15,\frac35,\frac15)$, $(\frac15,\frac25,\frac25)$ and $(\frac15,\frac25,\frac15,\frac15)$ in the order listed, so the weighted sum of the values of $f$ at the vertices vanishes. If $f$ is maximal at the vertex with $D>1$ and weight $\mu$, this gives $\mu M\le(1-\mu)m$, that is, $M\le\frac23m$ for $C$ and $M\le\frac32m$ for $D$ and $E$. For $C$ ($D=3$), suppose $k\ge2$ and $\frac kb\le\frac{k'}a$. Since $b\le a$, this needs $k\le k'$, so $k+k'\ge4$ and $c\le1$. If $c=1$ then $k=k'=2$ and $a\le b$ forces $m\le M\le\frac23m$, which is impossible. If $c=0$ then $(k,k')=(2,3)$ and $2m\le 3M\le2m$, so the two ends give the same $\varepsilon^*$, and the lower end is a vertex with $D=1$. For $D$ and $E$ ($D=2$), suppose $k\ge3$ and $k a\le k'b$. Then $k'=5-c-k\le2-c$. If $c=1$, then $k=3$, $k'=1$ and $3(m+1)\le M+1\le\frac32m+1$, which is impossible. So $c=0$, $k'=5-k\le2$, and $3m\le km\le k'M\le\frac32k'm\le3m$. Hence $k=3$, $k'=2$ and the two ends give the same $\varepsilon^*$. The lower end is a vertex with $D=1$, or for $\tau=D$ possibly $(-1,\frac32)$, with $D=2$ and $Dk'=4$. The case of a minimal vertex with $D>1$ follows by replacing $n$ with $-n$.
+\end{proof}
+
+\begin{proposition}\label{prop:enum25}
+There are $789{,}460{,}684$ coordinate-free primitive rank-two sublattices of $\Z^4$ with squared covolume at most $11{,}331$. Of these, $21{,}301{,}056$ are contained in a signed permutation image of $\Wone$ or $\Wtwo$, and $36{,}832{,}896$ further ones in some $W_m$ with $|m|_1=5$. Each of the remaining ones except $18{,}960$ has a point with $G\ge\frac25$: a grid point $(i/Q,j/Q)$ with $Q\in\{2,10,20,30\}$, or else the point returned by the exact maximization of Section~\ref{sec:comp}, at which $G$ is evaluated exactly. The remaining $18{,}960$ subtori have $\ML<\frac25$. They have squared covolume at most $1{,}250$, form $141$ orbits under signed coordinate permutations, and their values are $\frac7{19}$, $\frac38$, $\frac8{21}$, $\frac5{13}$, $\frac{12}{31}$, $\frac9{23}$, $\frac{13}{33}$ and $\frac{15}{38}$, all of them in $\mathcal R$.
+\end{proposition}
+
+\begin{proof}[Proof of Theorem~\ref{thm:upto25}]
+(i) Let $\ML(U)<\frac25$. If $\ML(U)<\frac13$, Theorem~\ref{thm:second} gives $\ML(U)=\frac s{3s+1}$. Let $\frac13\le\ML(U)<\frac25$. If $U$ lies in a signed permutation image of $\Wone$ or $\Wtwo$, then $\ML(U)\le\frac13$, so $\ML(U)=\frac13\in\mathcal R$. If $U$ lies in some $W_m$ with $|m|_1=5$, then up to symmetry $U=\varphi_\tau(U_n)$ by Lemma~\ref{lem:Wodd}, and Lemma~\ref{lem:five} applies. Otherwise $\covol(U)^2\le11{,}331$ by Lemma~\ref{lem:generic25}, and Proposition~\ref{prop:enum25} applies.
+
+(ii) For a triple $v$ of distinct positive integers, $T_v\times\T$ is a coordinate-free two-dimensional subtorus with $\ML(T_v\times\T)=\ML(v)$, so by (i) every value below $\frac25$ is $\frac s{3s+1}$ or lies in $\mathcal R$. A triple with a repeated entry has the value of a pair, $\frac s{2s+1}$ or $\frac12$, and only $\frac13\in\mathcal R$ occurs below $\frac25$. Conversely, $\frac s{3s+1}=\ML(1,2,3s)$ by \cite[Theorem~5.1]{Kravitz}, and by \eqref{eq:R} it remains to prove the two formulas. The product $T_{(1,4,k)}\times\T$ is $\varphi_A(U_{(k,1,0)})$ up to symmetry, and $(k,1,0)\cdot P_A(\varepsilon)=[\frac{2k+2}5-\varepsilon(k+1),\ \frac{2k+3}5+\varepsilon(\frac k4+1)]$. For $k=5j+3$ this is $[2j+\frac85-\varepsilon(k+1),\ 2j+\frac95+\varepsilon(\frac k4+1)]$, which first contains an integer at $\varepsilon=\min(\frac4{5(k+4)},\frac3{5(k+1)})=\frac3{5(k+1)}$ for $k\ge8$, a value at most $\frac1{15}$. By Lemma~\ref{lem:fivecells}, $\ML(1,4,5j+3)=\frac25-\frac3{5(5j+4)}=\frac{2j+1}{5j+4}$. Similarly $T_{(2,3,k)}\times\T=\varphi_B(U_{(k,1,0)})$, and for $k=5j$ the interval $(k,1,0)\cdot P_B(\varepsilon)=[j+\frac25-\varepsilon(\frac k2+1),\ j+\frac35+\varepsilon(\frac k3+1)]$ first contains an integer at $\varepsilon=\frac4{5(k+2)}\le\frac1{15}$ for $j\ge2$, so $\ML(2,3,5j)=\frac25-\frac4{5(5j+2)}=\frac{2j}{5j+2}$.
+\end{proof}
+
+\begin{corollary}\label{cor:acc25}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item The accumulation points of the four-runner spectrum in $(0,\frac25]$ are exactly the three-runner values there, $\{\frac s{3s+1}:s\ge1\}\cup\mathcal R\cup\{\frac25\}$. In the notation of \cite{GiriKravitz},
+\[
+ \operatorname{acc}(\mathcal S(4))\cap[\tfrac1{10},\tfrac12)=\mathcal S(3)\cap[\tfrac1{10},\tfrac12),
+\]
+the case $n=4$ of \cite[Conjecture~1.5]{GiriKravitz} on $[\frac1{10},\frac12)$.
+\item $\frac7{50}\notin\mathcal S_2(4)$. Since $\frac7{50}\in\mathcal S^*(3)=\mathcal S^*_2(4)$ by \cite[Proposition~8.1 and Lemma~3.2]{GiriKravitz}, the spectrum of two-dimensional subtori of $\T^4$ is strictly smaller than the spectrum of two-dimensional closed subgroups.
+\item In the notation of \cite{JainKravitz}, with $\operatorname{Prog}(\alpha,\beta)=\{\alpha s+\beta:s\ge0\}$ and $\frac c{5}\operatorname{Prog}(\alpha,\beta)$ read as $\{\frac c{5x}:x\in\operatorname{Prog}(\alpha,\beta)\}$,
+\[
+ \mathcal S_1(3)\cap(\tfrac1{10},\tfrac16]=\Big(\big(\tfrac1{10}+\tfrac45\operatorname{Prog}(5,7)\big)\cup\big(\tfrac1{10}+\tfrac35\operatorname{Prog}(5,9)\big)\Big)\cap(\tfrac1{10},\tfrac16].
+\]
+So the finite symmetric difference in \cite[Theorem~1.4]{JainKravitz} has no element in $(\frac1{10},\frac16]$. It consists of the single value $\frac3{14}$, the term $s=0$ of the first progression, which lies outside that interval.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+(i) Let $A$ be the set of accumulation points in $(0,\frac25]$ of the values of all quadruples, repeated speeds allowed, and $A'$ the same for quadruples of distinct integers. Then $A'\subseteq A$. Every point of $A$ is the value of a two-dimensional subtorus by \cite[Theorem~1.4]{GiriKravitz}, which is coordinate-free since the value is positive, so it is $\frac25$ or lies in the set of Theorem~\ref{thm:upto25}(i). Every three-runner value, in particular $\frac25=\ML(1,4,6)$, is a lower accumulation point of values of quadruples of distinct integers by \cite[Theorem~1.3]{GiriKravitz}, whose proof, from \cite{Kravitz}, adds one large fourth speed to a triple. With Theorem~\ref{thm:upto25}(ii) this gives $A=A'=\mathcal S(3)\cap(0,\frac25]$. (ii) $\frac9{25}\notin\mathcal R$ since $2\cdot25-5\cdot9=5$, and a two-dimensional subtorus contained in a coordinate hyperplane has value $0$. (iii) Since $D=\frac12-\ML$, we have $\frac12-\frac{2j}{5j+2}=\frac1{10}+\frac4{5(5j+2)}$ and $\frac12-\frac{2j+1}{5j+4}=\frac1{10}+\frac3{5(5j+4)}$, and $5j+2$, $5j+4$ run through $\operatorname{Prog}(5,7)$, $\operatorname{Prog}(5,9)$ for $j\ge1$. The terms with $j=1$ are $\frac3{14}$ and $\frac16$. Now apply Theorem~\ref{thm:upto25}(ii) and \eqref{eq:R}.
+\end{proof}
+
+The same two ingredients apply one level higher. By Lemmas~\ref{lem:shortchar} and~\ref{lem:Wodd}, a coordinate-free two-dimensional subtorus with $\ML<\frac37$ lies in some $W_m$ with $|m|_1\in\{3,5,7\}$ or has bounded covolume, and the ten types of $W_m$ with $|m|_1=7$ all have loneliness $\frac37$. The contact argument of Lemma~\ref{lem:five} gives $1\le3q-7p\le6$ at vertices with determinant $1$, but it no longer excludes the other vertices: the subtorus $U=\{(10X+Y,\,-49X-5Y,\,9X,\,Y)\}$ of $W_{(4,1,1,1)}$ has $\ML(U)=\frac{43}{103}$, and $3\cdot103-7\cdot43=8$. This value is again a three-runner value, $\frac{43}{103}=\ML(1,102,25)$, so the level $\frac37$ needs a finer identification of the three-runner values than \eqref{eq:R}. We have not carried this out.
+
+\begin{remark}[Why slicing at a maximizer does not suffice]\label{rem:slicing}
+Giri and Kravitz observe that proving $\mathcal S_2(4)=\mathcal S(3)$ would settle \cite[Conjecture~1.5]{GiriKravitz} for $n=4$, and that the slicing argument behind $\mathcal S_2(n)\subseteq\mathcal S^*(n-1)$ would have to be refined. Let $x^*$ be a maximizer of $G$ on $U$ and let $a,b$ be active coordinates, $\norm{x^*_a}=\norm{x^*_b}=\ML(U)$, with $x^*_a=\sigma x^*_b$. The subgroup $U\cap\{x_a=\sigma x_b\}$ contains $x^*$, and if $x^*$ lies on its identity component, a circle, then $\ML(U)$ is the loneliness of a circle with a repeated speed, a three-runner value. For all $916{,}492$ coordinate-free two-dimensional subtori of covolume at most $20$, every one of the $1{,}348{,}608$ maximizers at which two independent coordinate forms are active, over the $582{,}624$ subtori with $\frac13<\ML(U)<\frac12$, lies on such a circle. This fails in general. The subtorus
+\[
+ U=\{(y_1,y_2,y_3,u):4y_1+21y_2+5y_3=0,\ u=2y_1+3y_2+3y_3\}
+\]
+has $\ML(U)=\frac{13}{30}$, its only maximizers are $\pm x^*$ with $x^*=(\frac{13}{30},\frac{13}{30},\frac{13}{30},\frac7{15})$, and $x^*$ lies on a non-identity component of each of its three slices. Indeed, with $\lambda=(4,21,5)$ and $c$ the index other than $a,b$, the slice $U\cap\{y_a=y_b\}$ has $\gcd(\lambda_c,30)\in\{2,3,5\}$ components, the point $(\frac r{30},\frac r{30},\frac r{30},\frac{8r}{30})$ of $U$ lies on the component indexed by $r$ modulo $\gcd(\lambda_c,30)$, and $x^*$ is the point with $r=13$. Nevertheless $\frac{13}{30}=\ML(1,8,29)$, and the circle of $(1,29,8)$ at the times $r/30$ reproduces the values of $G$ at these thirty points, which form the finite subgroup $U\cap\{y_1=y_2=y_3\}$. Among the $19{,}000$ distinct subtori $\{(y,u):\lambda\cdot y=0,\ \mu u=\theta\cdot y\}$ with $\lambda\in\Z_{>0}^3$ primitive, $\lambda_1+\lambda_2+\lambda_3\le42$, $\gcd(\lambda_c,\lambda_1+\lambda_2+\lambda_3)>1$ for every $c$, $\theta\in\{-4,\dots,4\}^3$ and $1\le\mu\le3$, the $602$ with no maximizer on a slice circle take $14$ distinct values, all of them three-runner values. So a proof of $\mathcal S_2(4)=\mathcal S(3)$ needs a second mechanism besides slicing, such as the circle through this finite subgroup. Below $\frac25$ such a mechanism is the arithmetic of the contact vertex in Lemma~\ref{lem:five}, which identifies the values without producing a circle. Section~\ref{sec:obstr} shows that the failure is not isolated: it occurs in an infinite family with values tending to $\frac12$, with a loss of at least $N^{-3}$ for every circle with a repeated speed.
+\end{remark}
+
+\section{Slicing obstructions of unbounded order}\label{sec:obstr}
+Remark~\ref{rem:slicing} exhibits one subtorus whose maximizers lie off every slice circle. This section gives an infinite family with the same property, in which the slices through the maximizers have arbitrarily many components and the values tend to $\frac12$, and it makes the loss quantitative. Call a coordinate-free circle contained in some $\{x_i=\pm x_j\}$, $i\ne j$, a \emph{repeated-speed circle}. For positive integers $A,B,C$ with $\gcd(A,B,C)=1$ put $\lambda=(A,B,C)$, $N=A+B+C$, $H=N/2$ when $N$ is even, and
+\[
+ U(A,B,C)=\{(y_1,y_2,y_3,u)\in\T^4:\ Ay_1+By_2+Cy_3=0,\ u=Hy_2\}.
+\]
+This is the graph of $y\mapsto Hy_2$ over the connected kernel of the primitive character $\lambda$ on $\T^3$, hence a two-dimensional subtorus, and it is coordinate-free since $A,B,C\ne0$.
+
+\begin{theorem}\label{thm:obstr}
+Let $4\mid N$ and $N\ge2(A+C)+2$, and put $r=\frac N2-1$ and $L=\frac rN=\frac12-\frac1N$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item $\ML(U(A,B,C))=L$, and the only maximizers are $\pm p$ with $p=(L,L,L,\frac12)$. Moreover $\ML(1,\frac N2,N-1)=L$.
+\item For $\{i,j,k\}=\{1,2,3\}$ the slice $U(A,B,C)\cap\{y_i=y_j\}$ has $\gcd(\lambda_k,N)$ components, and $p$ lies on its identity component if and only if $\gcd(\lambda_k,N)=1$. A repeated-speed circle in $U(A,B,C)$ attains $L$ if and only if one of $\gcd(A,N)$, $\gcd(B,N)$, $\gcd(C,N)$ equals $1$.
+\item If $\gcd(\lambda_k,N)>1$ for $k=1,2,3$, then $\ML(T)\le L-N^{-3}$ for every repeated-speed circle $T\subseteq U(A,B,C)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i) Since $\lambda\cdot(L,L,L)=r$ and $Hr/N=\frac N4-\frac12$, the point $p$ lies on $U$, and $G(p)=L$. Let $G(y,u)\ge L$ and write $y_i=\frac12+z_i$ with $|z_i|\le\frac1N$. As $\frac N2\in\Z$, the number $\lambda\cdot z$ is an integer in $[-1,1]$. If it is $\pm1$, positivity of $\lambda$ forces $z_i=\pm\frac1N$ for all $i$, that is $(y,u)=\mp p$. If it is $0$, then $B|z_2|=|Az_1+Cz_3|\le\frac{A+C}N$, and since $\frac H2=\frac N4\in\Z$ we get $u\equiv Hz_2$ and $\norm u\le\frac{A+C}{2B}$. With $S=A+C$ and $B=N-S$, the inequality $\frac S{2B}<L$ is equivalent to $N^2-2(S+1)N+2S>0$, which holds for $N\ge2S+2$. So this case is impossible. For the triple, $t=\frac rN$ gives the value $L$, since $\frac N2\cdot\frac rN\equiv\frac12$ and $\norm{(N-1)t}=\norm{t}$. Conversely, if all three distances exceed $L$ at some $t=\frac12-\delta$ with $0\le\delta<\frac1N$, then $\norm{(N-1)t}=\frac12-\norm{(N-1)\delta}$ forces $(N-1)\delta<\frac1N$, and then $\norm{\frac N2t}=\norm{\frac N2\delta}\le\frac N2\delta<\frac1{2(N-1)}<L$, a contradiction.
+
+(ii) On $y_i=y_j=t$ the relation reads $(N-\lambda_k)t+\lambda_ky_k=0$, whose kernel in $\T^2$ has $\gcd(N-\lambda_k,\lambda_k)=\gcd(\lambda_k,N)=g$ components, labelled by the value of the primitive character $\frac{N-\lambda_k}g t+\frac{\lambda_k}g y_k$ in $\frac1g\Z/\Z$. At $p$ this value is $\frac rg$, and $\gcd(r,N)=1$ because $r=\frac N2-1$ is odd and prime to $\frac N2$. So $p$ is on the identity component exactly when $g=1$. A repeated-speed circle attaining $L$ contains $\pm p$ by (i). At $p$ the last coordinate has distance $\frac12\ne L$, and $y_i=-y_j$ would give $\frac{2r}N\in\Z$. So such a circle lies in some $\{y_i=y_j\}$ and is the identity component of the slice, which contains $p$ only if $g=1$. Conversely, if $g=1$ the slice is a circle through $p$, coordinate-free because no coordinate of $p$ vanishes.
+
+(iii) None of the twelve equations $x_i=\pm x_j$ holds on all of $U$, because $\lambda$ has no zero entry and $H>1$. So a repeated-speed circle $T\subseteq U$ is the identity component of the one-dimensional group $U\cap\{x_i=\pm x_j\}$ for one of them. For $y_i=\sigma y_j$ the vector $w$ with $w_i=\lambda_k$, $w_j=\sigma\lambda_k$, $w_k=-(\lambda_i+\sigma\lambda_j)$, $w_4=Hw_2$ lies in $\Lambda_U$ on that slice. For $y_1=\sigma u$ and $y_3=\sigma u$ the vectors $(\sigma HC,C,-(\sigma HA+B),HC)$ and $(-(B+\sigma HC),A,\sigma HA,HA)$ do the same, and $y_2=\pm u$ forces $y_2=u=0$ on the identity component, which is not coordinate-free. So $T$ has speeds of absolute value at most $HN$, and by Lemma~\ref{lem:corner} its loneliness is $a/d$ with integers $a$ and $1\le d\le2HN=N^2$. By (ii), $a/d<L$, so $L-\frac ad=\frac{rd-aN}{Nd}\ge\frac1{N^3}$.
+\end{proof}
+
+For instance $A=m$, $C=m+1$, $N=4m(m+1)(2m+1)K$ and $B=N-2m-1$, with $m\ge2$ and $K\ge1$, satisfy the hypotheses with $\gcd(\lambda_k,N)$ equal to $m$, $2m+1$ and $m+1$. So the three slices through each maximizer have arbitrarily many components, none of their identity components meets a maximizer, and the values $L=\frac12-\frac1N$ tend to $\frac12$. All of them are three-runner values by (i), as Conjecture~1.5 of \cite{GiriKravitz} predicts. For example $U(2,55,3)$ has $L=\frac{29}{60}$ and component orders $2,5,3$.
+
+The loss in (iii) is not an artifact of the bound. Inside the same subtori, circles with four distinct speeds come closer to $L$ than any repeated-speed circle can.
+
+\begin{theorem}\label{thm:fourspeed}
+Let $4\mid N$, $N\ge12$ and $\ell\ge1$. Then
+\[
+ \ML\Big(1,\ \frac N2,\ 2N\ell-3,\ 3N\ell-\frac N2-2\Big)=\frac{(N-2)\ell-1}{2N\ell-2}=L-\frac1{N(N\ell-1)}.
+\]
+If moreover $60\mid N$ and $\ell\ge N+1$, then this circle lies in $U(2,N-5,3)$ up to signs, and its loneliness exceeds that of every repeated-speed circle in $U(2,N-5,3)$.
+\end{theorem}
+\begin{proof}
+Put $U_N=U(2,B,3)$ with $B=N-5$. The map $(s,t)\mapsto(Bs+3t,\,s,\,-Bs-2t,\,Hs)$ is an isomorphism $\T^2\to U_N$ with inverse $s=y_2$, $t=y_1+y_3$. For $k\ge0$ the circle $\{t=ks\}$ has the speeds $1$, $H$, $B+2k$, $B+3k$ up to sign, and $k=N\ell-H+1$ gives the four speeds of the theorem.
+
+Let $0\le\varepsilon\le\varepsilon_0=\frac1{N(N-1)}$. We claim that the points of $U_N$ with $G\ge L-\varepsilon$ are the points $(y,Hy_2)$ with $y=\pm\big((L,L,L)+\eta\big)$ and $\eta$ in the triangle $\{2\eta_1+B\eta_2+3\eta_3=0,\ \eta_i\ge-\varepsilon\}$. Write $y_i=\frac12+z_i$ with $|z_i|\le D=\frac1N+\varepsilon\le\frac1{N-1}$. Then $2z_1+Bz_2+3z_3$ is an integer of absolute value at most $ND<2$. If it is $0$, then $\norm u\le H|z_2|\le\frac{5HD}B\le\frac{5N}{2B(N-1)}<\frac{N-3}{2(N-1)}=L-\varepsilon_0$, where the strict inequality is $N^2-13N+15>0$, true for $N\ge12$. If it is $-1$, put $z_i=-\frac1N+\eta_i$. Then $\lambda\cdot\eta=0$ and $\eta_i\ge-\varepsilon$, the vertices of the triangle are $\varepsilon(H-1,-1,-1)$, $\varepsilon(-1,\frac5B,-1)$ and $\varepsilon(-1,-1,\frac{N-3}3)$, so $|\eta_i|\le\frac1N$ and the upper bounds $z_i\le D$ hold, and $\norm u=\frac12-H|\eta_2|\ge\frac12-H\varepsilon\ge L-\varepsilon$. The level $+1$ is the negative. This proves the claim.
+
+At $p$, where $(s,t)=(\frac rN,\frac{2r}N)$, the character $ks-t$ takes the value $\frac{(k-2)r}N$, and $(k-2)r\equiv(-H-1)(H-1)=1-H^2\equiv1\pmod N$ since $4\mid N$. On the triangle it changes by $k\eta_2-\eta_1-\eta_3$, whose values at the three vertices are $-(k+H-2)\varepsilon$, $\frac{5k+2B}B\varepsilon$ and $-(k+\frac N3-2)\varepsilon$. So the circle meets $\{G\ge L-\varepsilon\}$ exactly when $[\frac1N-(k+H-2)\varepsilon,\ \frac1N+\frac{5k+2B}B\varepsilon]$ contains an integer, and the negative triangle gives the same condition. The first contact is with $0$ at $\varepsilon=\frac1{N(k+H-2)}=\frac1{N(N\ell-1)}\le\varepsilon_0$, because reaching $1$ needs $\varepsilon\ge\frac{(N-1)B}{N(5k+2B)}$, which is larger. This proves the formula. If $60\mid N$, then $\gcd(2,N)$, $\gcd(N-5,N)$ and $\gcd(3,N)$ are $2$, $5$ and $3$, and for $\ell\ge N+1$ the deficit $\frac1{N(N\ell-1)}$ is smaller than $N^{-3}$, so Theorem~\ref{thm:obstr}(iii) gives the comparison.
+\end{proof}
+
+So in $U(2,N-5,3)$ with $60\mid N$ the loneliness of circles with distinct speeds approaches the maximum $L$, a three-runner value, while every repeated-speed circle stays at distance at least $N^{-3}$ below it. A proof of $\mathcal S_2(4)=\mathcal S(3)$ by passing from a subtorus to a circle with a repeated speed inside it is therefore impossible in general, and every circle with a repeated speed that attains the three-runner value $L=\ML(1,\frac N2,N-1)$ lies outside the subtorus. Theorem~\ref{thm:fourspeed} is an explicit instance of the relative spectra of Jain and Kravitz \cite{JainKravitz}.
+
+The obstruction is one phase of a larger family whose values are all three-runner values. For positive integers $A,B,C,H$ with $\gcd(A,B,C)=1$ put $S=A+C$, $N=S+B$ and
+\[
+ U_H(A,B,C)=\{(y_1,y_2,y_3,u)\in\T^4:\ Ay_1+By_2+Cy_3=0,\ u=Hy_2\},
+\]
+so that $U(A,B,C)=U_{N/2}(A,B,C)$.
+
+\begin{proposition}[Coalescence]\label{prop:coal}
+$\ML(U_H(A,B,C))$ is the maximum of $\min(\norm y,\norm z,\norm{Hy})$ over the closed subgroup $\{(y,z)\in\T^2:By+Sz=0\}$. In particular it depends on $A$ and $C$ only through $S$, and if $\gcd(B,S)=1$ it equals $\ML(S,B,HS)$.
+\end{proposition}
+\begin{proof}
+Let $0\le d\le\frac12$. If a point of $U_H$ has $G\ge d$, choose representatives $y_i\in[d,1-d]$ and put $y=y_2$ and $z=(Ay_1+Cy_3)/S$. Then $z\in[d,1-d]$, $By+Sz=Ay_1+By_2+Cy_3\in\Z$ and $\norm{Hy}=\norm u\ge d$. Conversely such $y,z$ give the point $(z,y,z,Hy)$ of $U_H$ with $G\ge d$. If $\gcd(B,S)=1$, the subgroup is the circle $(y,z)=(St,-Bt)$.
+\end{proof}
+
+\begin{theorem}[A phase transition]\label{thm:phase}
+Let $4\mid N$, $B\ge S$ and $H\equiv\frac N2\pmod N$, and put $D^*=\frac B{2(HS+B)}$. Then
+\[
+ \ML(U_H(A,B,C))=\frac12-\min\Big(\frac1N,\ D^*\Big).
+\]
+If $D^*>\frac1N$, the only maximizers are $\pm p$ with $p=(\frac12-\frac1N,\frac12-\frac1N,\frac12-\frac1N,\frac12)$, and the argument of Theorem~\ref{thm:obstr}(ii) applies unchanged. If $D^*<\frac1N$, the only maximizers are $\pm p^*$ with $p^*=(\frac12-D^*,\frac12+\frac SBD^*,\frac12-D^*,\frac12-D^*)$. If moreover $g=\gcd(B,S)$ divides $\frac N2$, then the repeated-speed circle $\{(-\frac Bgt,\frac Sgt,-\frac Bgt,\frac{HS}gt)\}\subseteq U_H$ contains $p^*$, and $\ML(U_H(A,B,C))=\ML(\frac Bg,\frac Sg,\frac{HS}g)$.
+\end{theorem}
+\begin{proof}
+At a level $\frac12-D$ write $y_i=\frac12+z_i$ with $|z_i|\le D$. As $\frac N2\in\Z$, $\lambda\cdot z$ is an integer, and $\frac H2\in\Z$ gives $u\equiv Hz_2$. If $D<\frac1N$, then $\lambda\cdot z=0$, so $B|z_2|\le SD$ and $\norm u\le\frac{HSD}B$, which is less than $\frac12-D$ when $D<D^*$. This proves $\ML\le\frac12-\min(\frac1N,D^*)$. The point $p$ lies on $U_H$ with $G(p)=\frac12-\frac1N$, because $\lambda\cdot(\frac12-\frac1N)(1,1,1)=\frac N2-1$ and $H(\frac12-\frac1N)\equiv\frac12$. The point $p^*$ lies on $U_H$ with $\lambda$-value $\frac N2$ and $u\equiv\frac{HSD^*}B=\frac12-D^*$, and $G(p^*)=\frac12-D^*$ since $S\le B$. This proves the formula. If $D^*>\frac1N$, the level $\lambda\cdot z=0$ is excluded at $D=\frac1N$, so a maximizer has $\lambda\cdot z=\pm1$ and is $\mp p$. If $D^*<\frac1N$, a maximizer has $\lambda\cdot z=0$ and equality in $B|z_2|\le SD^*$ and in $|Az_1+Cz_3|\le SD^*$, so it is $\pm p^*$. The displayed circle lies in $U_H$ because $-AB+BS-CB=0$. On the subgroup of Proposition~\ref{prop:coal} the primitive character $\frac Bgy+\frac Sgz$ takes the value $\frac N{2g}$ at the image of $p^*$, so $p^*$ lies on the identity component, which is the image of this circle, when $g\mid\frac N2$. The circle has the speeds $\frac Bg,\frac Sg,\frac{HS}g$, with $\frac Bg$ repeated.
+\end{proof}
+
+For $(A,B,C)=(2,55,3)$, with $N=60$, $S=5$ and $g=5$, the transition is at $H=\frac{B(N-2)}{2S}=319$. For $H=30,90,\dots,270$ the value is $\frac{29}{60}$ and no repeated-speed circle in $U_H$ attains it, while for $H=330$ and $390$ the values $\frac{15}{31}=\ML(1,11,330)$ and $\frac{195}{401}=\ML(1,11,390)$ are attained on $\{y_1=y_3\}$. So the obstruction of Theorem~\ref{thm:obstr} is one phase of the family $U_H$, and on both sides of the transition the values are three-runner values, $\ML(1,\frac N2,N-1)$ in the first phase and $\ML(\frac Bg,\frac Sg,\frac{HS}g)$ in the second when $g\mid\frac N2$.
+
+\section{Near-tight tuples for every number of speeds}\label{sec:general}
+In this section $n\ge3$, $\T^n=\R^n/\Z^n$ and $G(x)=\min_{i\le n}\norm{x_i}$, and subtori, $\Lambda_S$, $\covol$, coordinate-freeness, $T_v$ and $\ML$ are defined as in Section~2. The inequality \eqref{eq:lip} holds in $\T^n$ with the same proof. We say that LRC$(m)$ holds if every set of $m$ positive integers has loneliness at least $\frac1{m+1}$. Since $\ML(V)\ge\ML(V')$ for $V\subseteq V'$, LRC$(m)$ then gives the same bound for every set of at most $m$ positive integers. LRC$(m)$ is known for $m\le6$ \cite{CusickPomerance,Chen,Bienia,BHK,BarajasSerra}, and the computer assisted proofs \cite{Rosenfeld,Trak,SungTrak,Allikvere} cover $m\le14$. A two-dimensional subtorus $W\subseteq\T^n$ with $\ML(W)=\frac1n$ is \emph{critical}, and a set of $n-1$ positive integers with loneliness $\frac1n$ is a \emph{tight instance} for $n-1$ speeds.
+
+\begin{theorem}\label{thm:general}
+Let $n\ge3$, assume LRC$(n-1)$ and LRC$(n-2)$, and put $\kappa_n=(n(n-1))^{n-2}$.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item Every primitive $v\in\Z^n$ with all $v_i\ne0$ satisfies $\ML(T_v)>\frac1n-\frac{\kappa_n}{2\eucl v}$.
+\item Every coordinate-free two-dimensional subtorus $W\subseteq\T^n$ has $\ML(W)\ge\frac1n$. If $\ML(W)<\frac1n+\frac1{2n\kappa_n}$, then $W$ is critical and $\covol(W)<\kappa_n$. Every critical subtorus contains the circle of a tight instance for $n-1$ speeds.
+\item If $\ML(T_v)<\frac1n$ and $\eucl v\ge n\kappa_n^2$, then $T_v$ lies in a critical subtorus of covolume less than $\kappa_n$.
+\end{enumerate}
+\end{theorem}
+
+The proof uses three lemmas. The first is a form of \cite[Lemma~3.3]{GiriKravitz}, which states in the notation $D=\frac12-\ML$ that the largest value of $D$ on $k$-dimensional subtori of $\T^n$ equals the largest value on $(k-\ell)$-dimensional subtori of $\T^{n-\ell}$, and its last statement is \cite[Lemma~3.3]{Allikvere}. We include a proof because we use the circle it produces.
+
+\begin{lemma}[Coalescing two coordinates]\label{lem:coalesce}
+Let $S\subseteq\T^n$ be a coordinate-free subtorus of dimension $d\ge2$, and let $\ell_i$ be the restriction of the $i$th coordinate to $E=\R\Lambda_S$. There are $a\ne b$ with $\ell_a,\ell_b$ not proportional and $\varepsilon\in\{\pm1\}$ such that $S$ contains a coordinate-free subtorus of dimension $d-1$ on which $x_a=\varepsilon x_b$. Consequently $S$ contains a coordinate-free circle whose speeds take at most $n-d+1$ distinct absolute values, and $\ML(S)\ge\frac1{n-d+2}$ if LRC$(n-d+1)$ holds.
+\end{lemma}
+\begin{proof}
+The forms $\ell_i$ are nonzero, take integer values on $\Lambda_S$, and span the dual space $E^*$, which has dimension $d\ge2$. Let $P\subseteq E^*$ be the plane spanned by two non-proportional forms, and consider the rays $\R_{>0}\sigma\ell_k$ with $\ell_k\in P$ and $\sigma=\pm1$. They lie on at least two lines, and every line meets both open half-planes bounded by any other line. Hence two consecutive rays in the cyclic order around the origin, say $\R_{>0}\sigma\ell_a$ and $\R_{>0}\tau\ell_b$, lie on different lines and make an angle less than $\pi$. The form $\phi=\sigma\ell_a+\tau\ell_b$ lies in the open cone between them, which contains no ray, so $\phi$ is proportional to no $\ell_k$ (such an $\ell_k$ would lie in $P$). Put $\varepsilon=-\sigma\tau$, so that $\phi=\sigma(\ell_a-\varepsilon\ell_b)$, and let $H=\ker\phi$. It is a rational hyperplane of $E$, so the subtorus $S_H$ with $\R\Lambda_{S_H}=H$ has dimension $d-1$, it lies in $S$, and $x_a=\varepsilon x_b$ on $S_H$. A coordinate vanishes on $S_H$ exactly when $\ell_k$ vanishes on $H$, that is, when $\ell_k$ is proportional to $\phi$, so $S_H$ is coordinate-free.
+
+Call two coordinates equivalent on a subtorus if they agree there up to sign. On $S_H$ the classes of $a$ and $b$ merge, so the number of classes drops by at least one. Starting from at most $n$ classes on $S$ and applying the first part $d-1$ times gives a coordinate-free circle $T\subseteq S$ with at most $n-d+1$ classes, that is, whose speeds take at most $n-d+1$ distinct absolute values. Then $\ML(S)\ge\ML(T)\ge\frac1{n-d+2}$ by LRC$(n-d+1)$.
+\end{proof}
+
+\begin{lemma}[Density in $\T^n$]\label{lem:densityn}
+Let $S$ be a $k$-dimensional subtorus of $\T^n$ with $1\le k<n$, let $E=\R\Lambda_S$, let $\pi:\R^n\to E^\perp$ be the orthogonal projection, and let $\lambda_1\le\dots\le\lambda_{n-k}$ be the successive minima of the lattice $\pi(\Z^n)$ with respect to the maximum norm.
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=*]
+\item $\lambda_1\cdots\lambda_{n-k}\le1/\covol(S)$.
+\item Let $w_1,\dots,w_j\in\Z^n$ have linearly independent projections $\pi(w_i)$. The subtorus $S'$ with $\R\Lambda_{S'}=E+\R w_1+\dots+\R w_j$ has dimension $k+j$, and every point of $S'$ lies within maximum norm distance $\frac12\sum_i\supn{\pi(w_i)}$ of a point of $S$. In particular $\ML(S)\ge\ML(S')-\frac12\sum_i\supn{\pi(w_i)}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+As in Lemma~\ref{lem:density}(a), $\pi(\Z^n)$ is a lattice of rank $n-k$ in $E^\perp$ with covolume $1/\covol(S)$. The body $K=\{z\in E^\perp:\supn z\le1\}$ has volume at least $2^{n-k}$ by Vaaler's theorem \cite{Vaaler}, and Minkowski's second theorem \cite[Chapter~VIII]{Cassels} gives $\lambda_1\cdots\lambda_{n-k}\operatorname{vol}(K)\le2^{n-k}\covol(\pi(\Z^n))$, which is (a). For (b), $E+\R w_1+\dots+\R w_j=E+\R\pi(w_1)+\dots+\R\pi(w_j)$ has dimension $k+j$. Write $w_i=\pi(w_i)+e_i$ with $e_i\in E$, represent a point of $S'$ by $y=s+\sum_ib_i\pi(w_i)$ with $s\in E$, and let $c_i$ be an integer nearest to $b_i$. Then $y-\sum_ic_iw_i=(s-\sum_ic_ie_i)+\sum_i(b_i-c_i)\pi(w_i)$ represents the same point, its first summand represents a point of $S$, and its second summand has maximum norm at most $\frac12\sum_i\supn{\pi(w_i)}$. The last claim follows from \eqref{eq:lip}.
+\end{proof}
+
+\begin{lemma}[Corner lemma for planes]\label{lem:corner2}
+Let $W\subseteq\T^n$ be a coordinate-free two-dimensional subtorus. Then $\ML(W)=p/q$ with integers $p\ge1$ and $1\le q\le2\covol(W)$.
+\end{lemma}
+\begin{proof}
+Let $b,b'$ be a basis of $\Lambda_W$ and $r_i=(b_i,b'_i)\in\Z^2$. Then $W$ is the image of $\R^2$ under $y\mapsto(r_i\cdot y)_i$, the $r_i$ span $\R^2$, and the minors $D_{ij}=\det(r_i,r_j)$ satisfy $\sum_{i<j}D_{ij}^2=\covol(W)^2$ by the Cauchy--Binet formula, so $\covol(W)\ge1$. Let $f(y)=\min_i\norm{r_i\cdot y}$, let $y^*$ be a maximizer and $\mu=f(y^*)$, which is positive because $W$ contains a coordinate-free circle. If $\mu=\frac12$ we are done. Otherwise let $I$ be the set of $i$ with $\norm{r_i\cdot y^*}=\mu$. For $i\in I$ there are $\sigma_i\in\{\pm1\}$ and $k_i\in\Z$ with $\norm{r_i\cdot y}=\sigma_i(r_i\cdot y-k_i)$ near $y^*$, and $f(y)=\min_{i\in I}\sigma_i(r_i\cdot y-k_i)$ near $y^*$. Hence $(y^*,\mu)$ is a local, and therefore global, maximum point of the linear function $\nu$ on the convex polyhedron $P=\{(y,\nu):\sigma_i(r_i\cdot y-k_i)\ge\nu,\ i\in I\}$. A line contained in $P$ has a direction $(\delta,\eta)$ with $\sigma_ir_i\cdot\delta=\eta$ for $i\in I$, and $\eta=0$ because $\nu$ is bounded on $P$.
+
+If the $r_i$ with $i\in I$ span $\R^2$, then $P$ contains no line, so $\nu$ attains $\mu$ at a vertex of $P$, where three constraints $i,j,m$ with linearly independent rows $(\sigma_ir_i,-1)$ are active. By Cramer's rule $\mu\in\frac1\Delta\Z$, where $\Delta$ is the absolute value of the determinant of these rows, and expanding along the last column gives $\Delta\le|D_{ij}|+|D_{im}|+|D_{jm}|\le\sqrt3\covol(W)$. Otherwise $r_i=c_iw$ for $i\in I$, with a primitive $w\in\Z^2$ and integers $c_i\ne0$. Then the constraints depend on $y$ only through $z=w\cdot y$, and the maximum of $\nu$ on the polygon $\{(z,\nu):\sigma_i(c_iz-k_i)\ge\nu,\ i\in I\}$, which contains no line, is attained at a vertex, where two constraints $i,j$ with $\sigma_ic_i\ne\sigma_jc_j$ are active. So $\mu\in\frac1{|\sigma_ic_i-\sigma_jc_j|}\Z$. Some $r_m$ is not parallel to $w$, and $|c_i|\le|c_i\det(w,r_m)|=|D_{im}|$ and likewise $|c_j|\le|D_{jm}|$, so $|\sigma_ic_i-\sigma_jc_j|\le\sqrt2\covol(W)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:general}]
+By Lemma~\ref{lem:coalesce}, coordinate-free subtori of dimension two have loneliness at least $\frac1n$, and those of dimension three have loneliness at least $\frac1{n-1}$.
+
+(ii) Let $W$ be coordinate-free of dimension two with $\ML(W)<\frac1n+\frac1{2n\kappa_n}$, and let $A=\covol(W)$. By Lemma~\ref{lem:densityn}(a) with $k=2$ there is $w\in\Z^n$ with $0<\supn{\pi(w)}=\lambda_1\le A^{-1/(n-2)}$, and Lemma~\ref{lem:densityn}(b) gives a coordinate-free three-dimensional subtorus $S'\supseteq W$ with $\frac1{n-1}\le\ML(S')\le\ML(W)+\frac12\lambda_1$. Hence
+\[
+ A^{-1/(n-2)}\ \ge\ \lambda_1\ \ge\ \frac2{n-1}-2\ML(W)\ >\ \frac2{n(n-1)}-\frac1{n\kappa_n}\ \ge\ \frac1{n(n-1)},
+\]
+since $\kappa_n\ge n-1$, so $A<\kappa_n$. By Lemma~\ref{lem:corner2}, $\ML(W)=p/q$ with $q\le2A<2\kappa_n$. If $\ML(W)\ne\frac1n$, then $\ML(W)-\frac1n=\frac{np-q}{nq}\ge\frac1{nq}>\frac1{2n\kappa_n}$, a contradiction. If $W$ is critical, Lemma~\ref{lem:coalesce} gives a coordinate-free circle $T\subseteq W$ whose speeds take at most $n-1$ distinct absolute values, and $\ML(T)\le\ML(W)=\frac1n$. By LRC$(n-2)$ there are exactly $n-1$ values, and by LRC$(n-1)$ we get $\ML(T)=\frac1n$.
+
+(i) Suppose that $\ML(T_v)<\frac1n$. Apply Lemma~\ref{lem:densityn} to $S=T_v$, for which $k=1$ and $\covol(S)=\eucl v$, and choose $w_1,w_2\in\Z^n$ with linearly independent projections and $\supn{\pi(w_i)}=\lambda_i$. Part (b) gives coordinate-free subtori $W\supseteq T_v$ of dimension two and $S_3\supseteq T_v$ of dimension three with
+\begin{gather*}
+ \ML(T_v)\ge\ML(W)-\tfrac12\lambda_1\ge\tfrac1n-\tfrac12\lambda_1,\\ \ML(T_v)\ge\ML(S_3)-\tfrac12(\lambda_1+\lambda_2)\ge\tfrac1{n-1}-\lambda_2.
+\end{gather*}
+The second inequality gives $\lambda_i\ge\lambda_2>\frac1{n-1}-\frac1n=\frac1{n(n-1)}$ for $i\ge2$, so part (a) gives $\lambda_1<\kappa_n/\eucl v$, and the first inequality gives (i).
+
+(iii) For $W$ as in the proof of (i), $\ML(W)\le\ML(T_v)+\frac12\lambda_1<\frac1n+\frac{\kappa_n}{2\eucl v}\le\frac1n+\frac1{2n\kappa_n}$, and (ii) applies.
+\end{proof}
+
+The hypotheses of Theorem~\ref{thm:general} hold for $3\le n\le7$, and for $n\le15$ by the computer assisted proofs cited above. They are the hypotheses of Cordella's reduction lemma \cite[Lemma~2.4]{Cordella}, and part (iii) is its effective form: a near-tight $n$-tuple on no critical subtorus has $\eucl v<n\kappa_n^2$. This answers \cite[Question~6.7]{Cordella} for every $n$. The step of \cite{Cordella} that is not effective is a gap above $\frac1n$ in the values of two-dimensional subtori, which comes from the fact that, in the notation $D=\frac12-\ML$, these values have only upper accumulation points \cite[Theorem~1.4]{GiriKravitz}. Part (ii) makes the gap explicit and bounds the covolume of the critical subtori. Its last statement explains why tight instances for $n-1$ speeds govern the near-tight $n$-tuples. For $n=4$ the circle of $\{1,2,3\}$ lies on $\Uone$ (at $a=b$) and on $\Utwo$ (at $x=y$), and for $n=5$ Cordella combines his reduction with Chen's two tight quadruples $\{1,2,3,4\}$ and $\{1,3,4,7\}$. In contrast with Section~\ref{sec:obstr}, at the lowest value $\frac1n$ a circle with a repeated speed always attains $\ML(W)$.
+
+Part (i) says that the values of $\ML$ below $\frac1n$ approach $\frac1n$ at rate $1/\eucl v$. For $\eta>0$ the values at most $\frac1n-\eta$ come from tuples with $\eucl v<\kappa_n/(2\eta)$, so they form an explicit finite set, and the exponent of $\eucl v$ is best possible because $\ML(1,2,3,4k)=\frac14-\frac1{16k+4}$ by Theorem~\ref{thm:main}. Giri and Kravitz \cite[Section~7]{GiriKravitz} showed effectively that a circle of length $\eucl v$ is $\varepsilon$-dense in a two-dimensional subtorus once $\eucl v\ge c_n\varepsilon^{1-n}$ with an explicit $c_n$, which gives a deficit of order $\eucl v^{-1/(n-1)}$. The exponent $1$ comes from the second minimum $\lambda_2$, which LRC$(n-2)$ controls. For the conjecture itself, (i) reduces the case of $n$ speeds to $\eucl v<n(n+1)\kappa_n/2$. This does not improve the bound $\binom{n+1}2^{n-1}$ of Malikiosis, Santos and Schymura \cite{MSS}, and Allikvere \cite[Theorem~3.8]{Allikvere} bounds counterexamples much more sharply by applying LRC$(m)$ for all $m<n$ along a whole flag of subtori containing $T_v$. The content of (i) is the range between $\frac1{n+1}$ and $\frac1n$, where counterexample bounds say nothing. The constants are far from what an exhaustive search can handle: $4\kappa_4^2=82{,}944$ against the bound $512$ of Proposition~\ref{prop:large}, and $5\kappa_5^2=3.2\cdot10^8$, $6\kappa_6^2\approx3.9\cdot10^{12}$. So for five and six speeds the theorems of \cite{Cordella} now hold for all near-tight tuples outside an explicit finite set, and checking that set needs sharper constants, as Propositions~\ref{prop:list} and~\ref{prop:large} provide for $n=4$.
+
+\subsection{Five speeds}\label{sec:five}
+For five speeds the general constants can be replaced by an exact statement up to $\frac29$, because Theorem~\ref{thm:main} identifies the circles with a repeated speed that a subtorus of small loneliness must contain. For a quadruple $u$ write $T_u\times\T=\{(u_1t,u_2t,u_3t,u_4t,s)\}\subseteq\T^5$. Its loneliness is $\ML(u)$, since the last coordinate can be put at $\frac12$.
+
+\begin{theorem}\label{thm:five}
+Let $W\subseteq\T^5$ be a coordinate-free two-dimensional subtorus with $\ML(W)<\frac29$. Then, up to signed coordinate permutations, $W=T_{(1,2,3,4)}\times\T$ or $W=T_{(1,3,4,7)}\times\T$, and $\ML(W)=\frac15$.
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{lem:coalesce}, $W$ contains a coordinate-free circle $T$ whose speeds take at most four distinct absolute values, and $\ML(T)\le\ML(W)<\frac29$. At most three values would give $\ML(T)\ge\frac14$ by the conjecture for three speeds, so there are exactly four, and by Corollary~\ref{cor:consequences}(iii) they are a multiple of $\{1,2,3,4\}$ or of $\{1,3,4,7\}$. The same holds for every coordinate-free circle in $W$ with a repeated absolute speed. After a signed coordinate permutation, $T$ is the circle of one of the eight vectors
+\begin{gather*}
+ (1,1,2,3,4),\quad(1,2,2,3,4),\quad(1,2,3,3,4),\quad(1,2,3,4,4),\\
+ (1,1,3,4,7),\quad(1,3,3,4,7),\quad(1,3,4,4,7),\quad(1,3,4,7,7),
+\end{gather*}
+call it $q$.
+Since $q$ is primitive and lies in the primitive lattice $\Lambda_W$, we have $\Lambda_W=\Z q+\Z c$ for some $c\in\Z^5$. Replacing $c$ by $\pm c+mq$ we may assume $c_1=0$, as $q_1=1$, and that the first nonzero entry of $c$ is positive. The minors $c_k=q_1c_k-q_kc_1$ show that $\Z q+\Z c$ is primitive exactly when $\gcd(c)=1$.
+
+Next we bound $\covol(W)$. Apply Lemma~\ref{lem:densityn} to $S=W$, with $k=2$ and successive minima $\lambda_1\le\lambda_2\le\lambda_3$. Part (b) gives coordinate-free subtori containing $W$ of dimensions three, four and five, with loneliness at least $\frac14$, $\frac13$ and $\frac12$ by Lemma~\ref{lem:coalesce} and the conjecture for three and two speeds. Hence $\lambda_1>2(\frac14-\frac29)=\frac1{18}$, $\lambda_1+\lambda_2>2(\frac13-\frac29)=\frac29$ and $\lambda_1+\lambda_2+\lambda_3>2(\frac12-\frac29)=\frac59$. So $\lambda_2>\frac19$ and $\lambda_3>\frac5{27}$, and part (a) gives $\covol(W)<\frac{4374}5$, that is
+\[
+ \covol(W)^2=\sum_{i<j}(q_ic_j-q_jc_i)^2\le 765{,}275 .
+\]
+A circle of $W$ with a repeated absolute speed is the image of a line in the direction orthogonal to $r_i-\varepsilon r_j$ for some $i<j$ and $\varepsilon=\pm1$, where $r_k=(q_k,c_k)$ are the coordinate rows of the parametrization $(t,s)\mapsto tq+sc$. For each of the eight vectors $q$, the program \texttt{g5enum2} (Section~\ref{sec:comp}) enumerates every normalized $c$ in this range and tests all of these directions. It finds that $W=\Z q+\Z c$ satisfies the condition of the first paragraph only for $16$ pairs $(q,c)$, two for each $q$, and in each of them one of the two coordinates where $q$ has a repeated entry is a free coordinate of $W$ while the other four coordinates are the circle of $\{1,2,3,4\}$ or $\{1,3,4,7\}$. So $W$ is one of the two products, and both have loneliness $\frac15$.
+\end{proof}
+
+\begin{corollary}\label{cor:five}
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item The accumulation points of the set of values $\ML(V)$, over all sets $V$ of five positive integers, that lie in $(0,\frac29)$ consist of $\frac15$ alone. In the notation $D=\frac12-\ML$ this is the case $n=5$ of \cite[Conjecture~1.5]{GiriKravitz} on $(\frac5{18},\frac12)$.
+\item Every primitive five-speed tuple $v$ with $\ML(v)<\frac15$ and $\eucl v\ge33{,}750$ is, up to order, $\{a,2a,3a,4a,b\}$ or $\{a,3a,4a,7a,b\}$ with $\gcd(a,b)=1$. In particular the critical subtori for five speeds are the two products of Theorem~\ref{thm:five}.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+(i) By \cite[Theorem~1.4]{GiriKravitz}, $\mathcal S(4)\subseteq\operatorname{acc}(\mathcal S(5))\subseteq\mathcal S_2(5)$. The two conventions are reconciled as in the proof of Corollary~\ref{cor:acc}: a tuple with a repeated speed has the value of a set of at most four speeds, and by Corollary~\ref{cor:consequences} the only such value below $\frac29$ is $\frac15$. Theorem~\ref{thm:five} gives $\mathcal S_2(5)\cap(0,\frac29)=\{\frac15\}$, and $\frac15=\ML(1,2,3,4)$.
+
+(ii) Apply Lemma~\ref{lem:densityn} to $S=T_v$ as in the proof of Theorem~\ref{thm:general}(i). With $S_{j+1}$ the subtorus of dimension $j+1$ built from the first $j$ minima, $\ML(S_{j+1})\ge\frac14,\frac13,\frac12$ for $j=2,3,4$, so $\ML(v)<\frac15$ gives $\lambda_1+\lambda_2>\frac1{10}$, $\lambda_1+\lambda_2+\lambda_3>\frac4{15}$ and $\lambda_1+\dots+\lambda_4>\frac35$. Hence $\lambda_2\lambda_3\lambda_4>\frac1{20}\cdot\frac4{45}\cdot\frac3{20}=\frac1{1500}$ and $\lambda_1<1500/\eucl v$. The two-dimensional subtorus $W=S_2\supseteq T_v$ has $\ML(W)\le\ML(v)+\frac12\lambda_1<\frac15+\frac{750}{\eucl v}\le\frac29$, so $W$ is one of the products of Theorem~\ref{thm:five}, and $v\in\Lambda_W$ gives the two forms. The last statement follows because a critical subtorus has loneliness $\frac15<\frac29$.
+\end{proof}
+
+Part (ii) is the effective form of Cordella's reduction for five speeds \cite{Cordella}, with the critical subtori determined and the bound $n\kappa_n^2=3.2\cdot10^8$ of Theorem~\ref{thm:general}(iii) replaced by $33{,}750$. For four speeds the corresponding statement is Proposition~\ref{prop:large}, where the second critical subtorus $\Utwo$ is not a product. For five speeds no such subtorus exists below $\frac29$.
+
+\section{Computations and reproducibility}\label{sec:comp}
+All programs are written in C with exact 64-bit integer arithmetic (the Hermite normal form enumeration uses floating point square roots only to set loop bounds, with a margin of one on each side, and every candidate is then tested exactly), and all claims that depend on them are re-verified by a Python script using only the standard library and exact fractions. The programs are the following.
+
+\emph{Exact loneliness of a two-dimensional subtorus.} For forms $\ell_i(X,Y)=s_iX+r_iY$, the maximum of $\min_i\norm{\ell_i}$ over $\T^2$ is attained at a point where three signed linear branches $\sigma_i(\ell_i-k_i)$ are equal, or where two proportional forms are at a common level and a third form is at a half-integer, or where two independent forms are at half-integers. Every such point is the solution of a $3\times3$ linear system with integer right-hand side in a bounded range. The program enumerates all of them, evaluates the minimum exactly at each, and returns the best point. It agrees with an independent implementation and with a fine grid search on several hundred random subtori with small coefficients. In the proof only the returned points are used, as certificates.
+
+\emph{Enumeration of two-dimensional subtori.} Hermite normal forms for case~(i) of Lemma~\ref{lem:reduce}, and primitive $n\in\Z^3$ for case~(ii). Running times are ten and three seconds. The enumeration of Proposition~\ref{prop:third-enum}, with covolume up to $57$, the special-subtorus test and the threshold $1/3$, runs in $54$ seconds. The enumeration of Proposition~\ref{prop:enum25}, with squared covolume up to $11{,}331$, the tests for the $40$ special characters and the $176$ characters with $|m|_1=5$ up to sign, and the threshold $\frac25$, ran in two parallel jobs of $21$ minutes. When the grids $Q\in\{2,10,20,30\}$ give no point with $G\ge\frac25$, the program calls the exact maximization, in a second implementation of the same candidate enumeration in which the integer offsets of a base pair of independent forms run only over a fundamental domain of the lattice they generate. This happened for $44{,}839{,}680$ lattices, of which $18{,}960$ had $\ML<\frac25$. The two implementations agree on all $916{,}492$ coordinate-free subtori of covolume at most $20$, on $19{,}300$ further subtori with larger coefficients, and on all $18{,}960$ survivors. The formula in the proof of Lemma~\ref{lem:five} was compared with the C maximizer for all subtori $U_n$ of the five tori with $\supn n\le20$, $142{,}547$ subtori, with no difference, and every value in $[\frac13,\frac25)$ among them lies in $\mathcal R$.
+
+\emph{Section~\ref{sec:obstr}.} The exact maximizer confirms Theorem~\ref{thm:obstr}(i) on $255$ random admissible subtori with $N\le126$. The loneliness of every repeated-speed circle was computed by Lemma~\ref{lem:corner} for $10{,}958$ admissible subtori with $N\le196$, $58$ of them with all three greatest common divisors above $1$, and for the examples $m\le4$, $K\le2$, in agreement with parts (ii) and (iii). The formula of Theorem~\ref{thm:fourspeed} was checked for all $4\mid N\le124$ and $\ell\le6$, and the comparison for $(N,\ell)=(60,61)$ and $(120,121)$. Proposition~\ref{prop:coal} was checked on $300$ random subtori with $\gcd(B,S)=1$ against $\ML(S,B,HS)$, and its independence of $A$ and $C$ on $1{,}440$ groups of parameters. Theorem~\ref{thm:phase} was checked on $5{,}460$ subtori with $N\le100$ and $H=\frac N2+jN$, $j\in\{0,1,2,5,9\}$, including the triple values of the second phase in all $3{,}651$ cases there with $g\mid\frac N2$.
+
+\emph{Section~\ref{sec:five}.} The program \texttt{g5enum2} runs through the vectors $c=(0,c_2,\dots,c_5)$ with $\sum_{i<j}(q_ic_j-q_jc_i)^2\le765{,}275$ by nested loops whose ranges come from the partial sums of this positive definite quadratic form, keeps those with $\gcd(c)=1$ and first nonzero entry positive, and tests all directions $r_i\mp r_j$. For the eight vectors $q$ together it visits $65{,}989{,}492{,}206$ vectors, of which $30{,}485{,}136{,}454$ are normalized, in two parallel jobs of $47$ and $40$ minutes, and exactly $16$ pass. They are the products of Theorem~\ref{thm:five}, with squared covolume $30$ or $75$. A Python search over a box, without the pruning, reproduces the number of normalized vectors and the survivors for all eight $q$ with the bound $3{,}000$ in place of $765{,}275$. The program \texttt{torusmlN} is the exact maximizer \texttt{torusml2} extended to any number of forms. It agrees with \texttt{torusml2} on $289$ random inputs with four forms and with a separate Python implementation on $80$ inputs with five forms, and it confirms $\ML=\frac15$ for the $16$ survivors. It also computes $\ML(\Z q+\Z c)$ for all $8{,}960$ normalized $c$ with $|c_i|\le3$: the $14$ with $\ML<\frac29$ all pass the test and have $\ML=\frac15$. On $20{,}000$ random primitive planes in $\Z^5$ with coordinates in $[-3,3]$ it finds no value in $(\frac15,\frac29)$.
+
+\emph{Exhaustive search.} All primitive quadruples with $\eucl v<512$, in two parallel runs of under one minute each.
+
+\emph{Verification script.} It checks the formulas of Theorems~\ref{thm:U1} and \ref{thm:U2} against the exact corner computation for all coprime $x,y\le 40$ and $b\le 10$, $a\le 60$, the $21$ classes of characters and the certificates of Table~\ref{tab:chars}, the $123$ certificates of Section~\ref{sec:two} including the covolumes and the coordinate-freeness, the classification of all primitive quadruples with maximum speed at most $60$ by an independent pure Python enumeration, the absence of $m=3$ and the witnesses for all other $m$, the formulas of Lemmas~\ref{lem:W1sub} and \ref{lem:W2sub} against an exact two-dimensional maximizer written in Python ($524$ subtori of $\Wone$ with $|n_1|\le6$, $|n_2|,|n_3|\le3$, $458$ subtori of $\Wtwo$ with $|n_1|,|n_2|\le4$, $|n_3|\le3$, covering all three cases of Lemma~\ref{lem:W2sub}, and $F(n_1,n_2)$ for $|n_i|\le4$), the by-product on triples for maximum speed at most $80$, and the output file of the exhaustive search, including $200$ random exact re-computations. Larger ranges were checked with the C maximizer: $3{,}356$ subtori of $\Wone$ and $3{,}354$ of $\Wtwo$ with $|n_1|\le12$, $|n_2|,|n_3|\le6$, the $624$ subtori $F(n_1,n_2)$ with $|n_i|\le12$, and the by-product on all $1{,}098{,}601$ primitive triples with maximum speed at most $200$, of which $4{,}639$ have $\ML<1/3$. For Section~\ref{sec:upto25} the script checks the arithmetic of Lemma~\ref{lem:generic25}, the five types of characters with $|m|_1=5$ and their parametrizations, Lemma~\ref{lem:fivecells} at all points of the grid $(\frac1{60}\Z)^3$ for three values of $\varepsilon$, the formula in the proof of Lemma~\ref{lem:five} against its own exact maximizer for all $U_n$ with $\supn n\le3$ in the five tori, the formulas for $\ML(2,3,5j)$ and $\ML(1,4,5j+3)$ for $j\le40$, the two descriptions of $\mathcal R$, the example with value $\frac{43}{103}$ at the level $\frac37$, and the example of Remark~\ref{rem:slicing}. For Section~\ref{sec:obstr} it checks $\ML(1,\frac N2,N-1)$ for $4\mid N\le200$, five subtori $U(A,B,C)$ with $N\le16$ and all their repeated-speed circles, Theorem~\ref{thm:fourspeed} for $N\le60$, $\ell\le3$, the comparison in $U(2,55,3)$ with $\ell=61$, Proposition~\ref{prop:coal} on small cases, Theorem~\ref{thm:phase} on both sides of the transition for $N=12$, and the two values $\frac{15}{31}$ and $\frac{195}{401}$. For the $18{,}960$ survivors of Proposition~\ref{prop:enum25} it checks the witness points, the squared covolumes and the values, reduces them to the $141$ orbits under signed permutations, and recomputes the value of each orbit with its own exact maximizer.
+
+
+\appendix
+\section{Tables}
+\begin{table}[H]
+\centering\small
+\begin{tabular}{l l l}
+\toprule
+$m$ & point $x\in W_m$ & $G(x)$\\\midrule
+$(0,0,1,-1)$ & $(2/5,2/5,2/5,2/5)$ & $2/5$\\
+$(1,-1,-1,-1)$ & $(2/5,2/5,2/5,3/5)$ & $2/5$\\
+$(0,1,-2,-1)$ & $(2/5,2/5,2/5,3/5)$ & $2/5$\\
+$(1,-2,-1,-1)$ & $(2/5,3/5,3/5,3/5)$ & $2/5$\\
+$(0,1,-2,-2)$ & $(2/5,2/5,3/5,3/5)$ & $2/5$\\
+$(0,0,1,-3)$ & $(2/5,2/5,1/2,1/2)$ & $2/5$\\
+$(1,-2,-2,-1)$ & $(2/5,2/5,3/5,2/5)$ & $2/5$\\
+$(0,1,-3,-1)$ & $(2/5,2/5,3/5,3/5)$ & $2/5$\\
+$(1,-3,-1,-1)$ & $(2/5,2/5,3/5,3/5)$ & $2/5$\\
+$(0,0,2,-3)$ & $(2/5,2/5,2/5,3/5)$ & $2/5$\\
+$(1,-2,-2,-2)$ & $(2/5,2/5,2/5,2/5)$ & $2/5$\\
+$(0,1,-3,-2)$ & $(2/5,2/5,2/5,3/5)$ & $2/5$\\
+$(1,-3,-2,-1)$ & $(2/5,2/5,2/5,2/5)$ & $2/5$\\
+$(0,0,1,-4)$ & $(2/5,2/5,2/5,3/5)$ & $2/5$\\
+$(0,2,-3,-2)$ & $(2/5,2/5,3/5,1/2)$ & $2/5$\\
+$(0,1,-4,-1)$ & $(2/5,2/5,1/2,2/5)$ & $2/5$\\
+$(1,-3,-2,-2)$ & $(2/5,3/5,2/5,2/5)$ & $2/5$\\
+$(0,1,-3,-3)$ & $(2/5,2/5,2/5,2/5)$ & $2/5$\\
+$(1,-4,-1,-1)$ & $(2/5,2/5,2/5,2/5)$ & $2/5$\\
+\midrule
+$(0,0,1,-2)$ & $\Wone$ up to symmetry & $\ML=1/3$\\
+$(0,1,-1,-1)$ & $\Wtwo$ up to symmetry & $\ML=1/3$\\
+\bottomrule
+\end{tabular}
+\caption{The $21$ classes of primitive $m\in\Z^4$ with at least two nonzero entries and $\eucl m^2\le19$, up to signed permutations, with certificates for Lemma~\ref{lem:W25}. In each row $m\cdot x\in\Z$.}
+\label{tab:chars}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{l r l l}
+\toprule
+$\ML(U)$ & $\covol^2$ & parametrization $(X,Y)\mapsto$ & maximizer\\\midrule
+$1/4$ & $9$ & $(X,\,Y,\,-X-2Y,\,-X-Y)$ & $(3/4,3/4)$ \\
+$1/4$ & $14$ & $(X,\,Y,\,-3Y,\,-2Y)$ & $(3/4,3/4)$ \\
+$2/7$ & $21$ & $(X,\,Y,\,-3X-3Y,\,-X-Y)$ & $(5/7,5/7)$ \\
+$2/7$ & $26$ & $(X,\,Y,\,-4Y,\,-3Y)$ & $(5/7,4/7)$ \\
+$2/7$ & $27$ & $(X,\,Y,\,-2X-4Y,\,-X-Y)$ & $(5/7,5/7)$ \\
+$2/7$ & $38$ & $(X,\,2Y,\,-5Y,\,-3Y)$ & $(5/7,6/7)$ \\
+$2/7$ & $41$ & $(X,\,Y,\,-6Y,\,-2Y)$ & $(5/7,5/7)$ \\
+$2/7$ & $62$ & $(X,\,Y,\,-6Y,\,-5Y)$ & $(5/7,5/7)$ \\
+$3/10$ & $45$ & $(X,\,Y,\,-4X-5Y,\,-X-Y)$ & $(7/10,7/10)$ \\
+$3/10$ & $57$ & $(X,\,Y,\,-3X-6Y,\,-X-Y)$ & $(7/10,7/10)$ \\
+$3/10$ & $74$ & $(X,\,3Y,\,-7Y,\,-4Y)$ & $(7/10,9/10)$ \\
+$3/10$ & $86$ & $(X,\,Y,\,-9Y,\,-2Y)$ & $(7/10,7/10)$ \\
+$3/10$ & $146$ & $(X,\,Y,\,-9Y,\,-8Y)$ & $(7/10,7/10)$ \\
+$4/13$ & $75$ & $(X,\,Y,\,-6X-6Y,\,-X-Y)$ & $(9/13,9/13)$ \\
+$4/13$ & $81$ & $(X,\,Y,\,-5X-7Y,\,-X-Y)$ & $(9/13,9/13)$ \\
+$4/13$ & $86$ & $(X,\,Y,\,-7Y,\,-6Y)$ & $(9/13,8/13)$ \\
+$4/13$ & $98$ & $(X,\,3Y,\,-8Y,\,-5Y)$ & $(9/13,7/13)$ \\
+$4/13$ & $99$ & $(X,\,Y,\,-4X-8Y,\,-X-Y)$ & $(9/13,9/13)$ \\
+$4/13$ & $122$ & $(X,\,4Y,\,-9Y,\,-5Y)$ & $(9/13,12/13)$ \\
+$4/13$ & $149$ & $(X,\,Y,\,-12Y,\,-2Y)$ & $(9/13,9/13)$ \\
+$4/13$ & $158$ & $(X,\,3Y,\,-10Y,\,-7Y)$ & $(9/13,3/13)$ \\
+$4/13$ & $206$ & $(X,\,2Y,\,-11Y,\,-9Y)$ & $(9/13,11/13)$ \\
+$4/13$ & $266$ & $(X,\,Y,\,-12Y,\,-11Y)$ & $(9/13,9/13)$ \\
+$5/16$ & $117$ & $(X,\,Y,\,-7X-8Y,\,-X-Y)$ & $(11/16,11/16)$ \\
+$5/16$ & $129$ & $(X,\,Y,\,-6X-9Y,\,-X-Y)$ & $(11/16,11/16)$ \\
+$5/16$ & $134$ & $(X,\,2Y,\,-9Y,\,-7Y)$ & $(11/16,13/16)$ \\
+$5/16$ & $153$ & $(X,\,Y,\,-5X-10Y,\,-X-Y)$ & $(11/16,11/16)$ \\
+$5/16$ & $182$ & $(X,\,5Y,\,-11Y,\,-6Y)$ & $(11/16,15/16)$ \\
+$5/16$ & $230$ & $(X,\,Y,\,-15Y,\,-2Y)$ & $(11/16,11/16)$ \\
+$5/16$ & $278$ & $(X,\,3Y,\,-13Y,\,-10Y)$ & $(11/16,9/16)$ \\
+$5/16$ & $422$ & $(X,\,Y,\,-15Y,\,-14Y)$ & $(11/16,11/16)$ \\
+\bottomrule
+\end{tabular}
+\caption{The $31$ coordinate-free two-dimensional subtori of $\T^4$ with $\ML\le5/16$, up to signed coordinate permutations, with a maximizer in the given coordinates. The first two are $\Utwo$ and $\Uone$ up to symmetry. The subtori of the form $(X,cY,\ldots)$ with the last three coordinates depending on $Y$ only are products of a three-runner circle with a full coordinate circle, and their values are the three-runner values $s/(3s+1)$.}
+\label{tab:tori}
+\end{table}
+
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{Allikvere} J.~Allikvere, \emph{Fourteen and fifteen lonely runners}, arXiv:2609.02604 (2026).
+\bibitem{BarajasSerra} J.~Barajas and O.~Serra, \emph{The lonely runner with seven runners}, Electron.\ J.\ Combin.\ 15 (2008), R48.
+\bibitem{BarajasSerraDM} J.~Barajas and O.~Serra, \emph{Distance graphs with maximum chromatic number}, Discrete Math.\ 308 (2008), 1355--1365.
+\bibitem{Bienia} W.~Bienia, L.~Goddyn, P.~Gvozdjak, A.~Seb\H{o} and M.~Tarsi, \emph{Flows, view obstructions, and the lonely runner}, J.\ Combin.\ Theory Ser.\ B 72 (1998), 1--9.
+\bibitem{BHK} T.~Bohman, R.~Holzman and D.~Kleitman, \emph{Six lonely runners}, Electron.\ J.\ Combin.\ 8 (2001), R3.
+\bibitem{Cassels} J.~W.~S.~Cassels, \emph{An Introduction to the Geometry of Numbers}, Springer, Berlin, 1959.
+\bibitem{Chen} Y.~G.~Chen, \emph{On a conjecture in Diophantine approximations, II}, J.\ Number Theory 37 (1991), 181--198.
+\bibitem{Cordella} F.~Cordella, \emph{Odd denominators in the Lonely Runner spectrum for six speeds}, arXiv:2609.03444 (2026).
+\bibitem{Cusick} T.~W.~Cusick, \emph{View-obstruction problems}, Aequationes Math.\ 9 (1973), 165--170.
+\bibitem{CusickPomerance} T.~W.~Cusick and C.~Pomerance, \emph{View-obstruction problems, III}, J.\ Number Theory 19 (1984), 131--139.
+\bibitem{FanSun} H.~T.~Fan and A.~Sun, \emph{Amending the Lonely Runner Spectrum Conjecture}, Electron.\ J.\ Combin.\ 33 (2026), P1.38; arXiv:2306.10417.
+\bibitem{GiriKravitz} V.~Giri and N.~Kravitz, \emph{The structure of Lonely Runner spectra}, Math.\ Proc.\ Cambridge Philos.\ Soc.\ 180 (2026), 343--361; arXiv:2304.01462.
+\bibitem{GoddynWong} L.~Goddyn and E.~B.~Wong, \emph{Tight instances of the lonely runner}, Integers 6 (2006), A38.
+\bibitem{JainKravitz} V.~Jain and N.~Kravitz, \emph{Relative Lonely Runner spectra}, Combinatorial Theory 6 (2026), Paper~1; arXiv:2411.12684.
+\bibitem{Kravitz} N.~Kravitz, \emph{Barely lonely runners and very lonely runners: a refined approach to the Lonely Runner Problem}, Combinatorial Theory 1 (2021), Paper~17; arXiv:1912.06034.
+\bibitem{MSS} R.~D.~Malikiosis, F.~Santos and M.~Schymura, \emph{Linearly-exponential checking is enough for the Lonely Runner Conjecture and some of its variants}, Forum Math.\ Sigma 13 (2025), e164; arXiv:2411.06903.
+\bibitem{PerarnauSerra} G.~Perarnau and O.~Serra, \emph{The Lonely Runner Conjecture turns 60}, Computer Science Review (2025), Article 100798; arXiv:2409.20160.
+\bibitem{Rosenfeld} M.~Rosenfeld, \emph{The lonely runner conjecture holds for eight runners}, arXiv:2509.14111 (2025).
+\bibitem{SungTrak} T.~Sungkawichai and T.~Trakulthongchai, \emph{Eleven, twelve, and thirteen lonely runners}, arXiv:2604.23906 (2026).
+\bibitem{Trak} T.~Trakulthongchai, \emph{Nine and ten lonely runners}, Electron.\ J.\ Combin.\ 33 (2026), P2.46; arXiv:2511.22427.
+\bibitem{Vaaler} J.~D.~Vaaler, \emph{A geometric inequality with applications to linear forms}, Pacific J.\ Math.\ 83 (1979), 543--553.
+\bibitem{Wills} J.~M.~Wills, \emph{Zwei S\"atze \"uber inhomogene diophantische Approximation von Irrationalzahlen}, Monatsh.\ Math.\ 71 (1967), 263--269.
+\bibitem{Zhang} Y.~Zhang, \emph{Tight instances of the Lonely Runner Conjecture: one-entry modifications and the growth of speeds}, arXiv:2608.13599 (2026).
+\end{thebibliography}
+
+\end{document}
